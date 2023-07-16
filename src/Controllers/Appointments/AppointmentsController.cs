@@ -23,8 +23,10 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet]
-    public AppointmentResponse Get()
+    public async Task<AppointmentResponse> Get()
     {
+        var pstmnAppointments = await pstmn.GetAppointments();
+
         var appointments = Enumerable.Range(1, 5).Select(index => new Appointment
         {
             Date = DateTime.Now.AddDays(index),
