@@ -1,3 +1,6 @@
 .appointments-list {
     list-style: none;
+
+    border: 0.125em solid black;
+    border-radius: 2em;
 }
