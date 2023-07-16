@@ -29,7 +29,10 @@ type UserDetailsProps = {
 }
 export const UserDetails: React.FC<UserDetailsProps> = ({ user }) => {
     return (
-        <div className="appointment-member-detail user-detail"><UserIcon />User: {user?.givenName} {user?.familyName}</div>
+        <div className="appointment-member-detail user-detail">
+            <UserIcon />
+            <span>{user?.givenName} {user?.familyName}</span>
+        </div>
     )
 }
 
@@ -52,6 +55,9 @@ export const AnimalDetails: React.FC<AnimalDetailsProps> = ({ animal }) => {
             icon = <PawIcon />
     }
     return (
-        <div className="appointment-member-detail animal-detail">{icon}Animal: {animal?.givenName} {`(${animal?.species}, ${animal?.breed})`}</div>
+        <div className="appointment-member-detail animal-detail">
+            {icon}
+            <span>{animal?.givenName} {`(${animal?.species}, ${animal?.breed})`}</span>
+        </div>
     )
 }

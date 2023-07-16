@@ -15,6 +15,12 @@
     border-radius: 2em;
 
     background-color: var(--member-bg-color);
+
+    padding: 1em;
+}
+
+.appointment-member-detail svg {
+    margin-right: 0.5em;
 }
 
 .user-detail {
