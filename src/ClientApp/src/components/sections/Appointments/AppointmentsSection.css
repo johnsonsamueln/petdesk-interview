@@ -3,9 +3,11 @@
 
     border: 0.125em solid black;
     border-radius: 2em;
+
+    padding: 1em;
 }
 
 
-.appointments-list > li {
-    margin: 2em auto;
+.appointments-list > li:not(:last-child) {
+    margin-bottom: 2em;
 }
