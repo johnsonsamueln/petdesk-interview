@@ -20,14 +20,18 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<Appointment> Get()
+    public AppointmentResponse Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new Appointment
+        var appointments = Enumerable.Range(1, 5).Select(index => new Appointment
         {
             Date = DateTime.Now.AddDays(index),
             TemperatureC = Random.Shared.Next(-20, 55),
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        })
-        .ToArray();
+        }).ToArray();
+
+        return new AppointmentResponse()
+        {
+            Appointments = appointments
+        };
     }
 }
