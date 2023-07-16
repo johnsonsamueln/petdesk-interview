@@ -10,8 +10,8 @@
 	justify-content: space-between;
 }
 
-.appointment-member-detail {
-    border: 0.125em solid var(--member-border-color);
+.appointment-member-detail {    
+    border: 0.125em solid var(--member-color);
     border-radius: 2em;
 
     background-color: var(--member-bg-color);
@@ -20,15 +20,21 @@
 }
 
 .appointment-member-detail svg {
+    color: var(--member-color);
     margin-right: 0.5em;
 }
 
 .user-detail {
-    --member-border-color: darkblue;
+    --member-color: darkblue;
     --member-bg-color: lightcyan;
 }
 
 .animal-detail {
-    --member-border-color: forestgreen;
+    --member-color: forestgreen;
     --member-bg-color: palegreen;
+}
+
+.schedule-detail {
+    --member-color: darkgoldenrod;
+    --member-bg-color: lightyellow;
 }
