@@ -37,7 +37,7 @@ public class AppointmentsController : ControllerBase
 
     [HttpPost]
     [Route("confirm")]
-    public IActionResult Confirm([FromBody] ControllerModels.ConfirmAppointmentRequest request)
+    public async Task<IActionResult> Confirm([FromBody] ControllerModels.ConfirmAppointmentRequest request)
     {
         if (request.AppointmentId <= 0)
         {
@@ -46,13 +46,14 @@ public class AppointmentsController : ControllerBase
         else
         {
             logger.LogInformation($"Confirming appointment {request.AppointmentId}");
+            await Task.Delay(millisecondsDelay: 2000);
             return Ok();
         }
     }
 
     [HttpPost]
     [Route("reschedule")]
-    public IActionResult Reschedule([FromBody] ControllerModels.RescheduleAppointmentRequest request)
+    public async Task<IActionResult> Reschedule([FromBody] ControllerModels.RescheduleAppointmentRequest request)
     {
         if (request.AppointmentId <= 0)
         {
@@ -65,6 +66,7 @@ public class AppointmentsController : ControllerBase
         else
         {
             logger.LogInformation($"Rescheduling appointment {request.AppointmentId} for {request.RequestedDateTimeOffset}");
+            await Task.Delay(millisecondsDelay: 2000);
             return Ok();
         }
     }
