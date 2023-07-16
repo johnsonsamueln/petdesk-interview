@@ -10,6 +10,14 @@
 	justify-content: space-between;
 }
 
+.appointment-members {
+    display: flex;
+}
+
+.appointment-members :not(:last-child) {
+    margin-right: 1em;
+}
+
 .appointment-member-detail {    
     border: 0.125em solid var(--member-color);
     border-radius: 2em;
