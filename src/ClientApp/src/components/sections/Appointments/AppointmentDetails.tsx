@@ -22,8 +22,8 @@ export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointm
                     <ScheduleDetails appointment={appointment} />
                 </div>
                 <div className="appointment-actions">
-                    <button className="btn btn-success">Confirm</button>
-                    <button className="btn btn-warning">Reschedule</button>
+                    <button className="appointment-action-button confirm-action">Confirm</button>
+                    <button className="appointment-action-button reschedule-action">Reschedule</button>
                 </div>
             </div>
         </div>

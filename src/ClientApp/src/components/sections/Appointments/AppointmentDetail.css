@@ -51,3 +51,22 @@
 .appointment-actions > :not(:last-child) {
     margin-right: 0.5em;
 }
+
+.appointment-action-button {
+    border: 0.125em solid var(--action-button-color);
+    border-radius: 0.5em;
+
+    background-color: var(--action-button-bg-color);
+
+    padding: 0.125em 0.5em;
+}
+
+.confirm-action {
+    --action-button-color: forestgreen;
+    --action-button-bg-color: rgb(214, 253, 214);
+}
+
+.reschedule-action {
+    --action-button-color: darkgoldenrod;
+    --action-button-bg-color: lightyellow;
+}
