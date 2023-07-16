@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using petdesk_interview_app.Controllers.Appointments.Models;
+using petdesk_interview_app.External.Pstmn;
 
 namespace petdesk_interview_app.Controllers.Appointments;
 
@@ -12,11 +13,13 @@ public class AppointmentsController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    private readonly ILogger<AppointmentsController> _logger;
+    private readonly ILogger<AppointmentsController> logger;
+    private readonly IPstmn pstmn;
 
-    public AppointmentsController(ILogger<AppointmentsController> logger)
+    public AppointmentsController(ILogger<AppointmentsController> logger, IPstmn pstmn)
     {
-        _logger = logger;
+        this.logger = logger;
+        this.pstmn = pstmn;
     }
 
     [HttpGet]
