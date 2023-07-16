@@ -1,3 +1,4 @@
+using System.Text.Json;
 using petdesk_interview_app.External.Pstmn.Models;
 
 namespace petdesk_interview_app.External.Pstmn;
@@ -11,8 +12,24 @@ public class Pstmn : IPstmn
         this.httpClientFactory = httpClientFactory;
     }
 
-    public Task<Appointment[]> GetAppointments()
+    public async Task<Appointment[]> GetAppointments()
     {
-        throw new NotImplementedException();
+        var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://723fac0a-1bff-4a20-bdaa-c625eae11567.mock.pstmn.io/appointments");
+
+        var httpClient = httpClientFactory.CreateClient();
+        var responseMessage = await httpClient.SendAsync(requestMessage);
+
+        responseMessage.EnsureSuccessStatusCode();
+        using var contentStream = await responseMessage.Content.ReadAsStreamAsync();
+
+        var appointments = await JsonSerializer.DeserializeAsync<Appointment[]>(contentStream);
+        if (appointments == null)
+        {
+            return Array.Empty<Appointment>();
+        }
+        else
+        {
+            return appointments;
+        }
     }
 }
