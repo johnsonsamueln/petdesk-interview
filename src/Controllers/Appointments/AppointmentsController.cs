@@ -7,7 +7,7 @@ using AutoMapper;
 namespace petdesk_interview_app.Controllers.Appointments;
 
 [ApiController]
-[Route("[controller]")]
+[Route("appointments")]
 public class AppointmentsController : ControllerBase
 {
     private readonly ILogger<AppointmentsController> logger;
@@ -22,6 +22,7 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet]
+    [Route("")]
     public async Task<ControllerModels.AppointmentResponse> Get()
     {
         var pstmnAppointments = await pstmn.GetAppointments();
@@ -32,5 +33,12 @@ public class AppointmentsController : ControllerBase
         {
             Appointments = appointments,
         };
+    }
+
+    [HttpPost]
+    [Route("confirm")]
+    public async Task Confirm()
+    {
+        await Task.CompletedTask;
     }
 }
