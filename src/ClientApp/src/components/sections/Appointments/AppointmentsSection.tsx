@@ -32,14 +32,31 @@ export const AppointmentsSection: React.FC = () => {
         });
 
         if (fetchResponse.ok) {
-            setAppointments(prevAppointments => {
-                const confirmedAppointment = prevAppointments.find(appointment => appointment.appointmentId === appointmentId);
-                if (confirmedAppointment) {
-                    confirmedAppointment.appointmentStatus = AppointmentStatus.ConfirmedByVet;
-                }
-                return prevAppointments;
-            })
+            setAppointmentStatus(appointmentId, AppointmentStatus.ConfirmedByVet);
         }
+    }
+
+    const rescheduleAppointment = async (appointmentId: number, requestedDate: Date) => {
+        const rescheduleRequest = { appointmentId, requestedDate };
+        const fetchResponse = await fetch(API_ROUTES.APPOINTMENT_RESCHEDULE, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(rescheduleRequest)
+        });
+
+        if (fetchResponse.ok) {
+            setAppointmentStatus(appointmentId, AppointmentStatus.RescheduleRequestedByVet);
+        }
+    }
+
+    const setAppointmentStatus = async (appointmentId: number, appointmentStatus: AppointmentStatus) => {
+        setAppointments(prevAppointments => {
+            const confirmedAppointment = prevAppointments.find(appointment => appointment.appointmentId === appointmentId);
+            if (confirmedAppointment) {
+                confirmedAppointment.appointmentStatus = appointmentStatus;
+            }
+            return prevAppointments;
+        })
     }
 
     return (
