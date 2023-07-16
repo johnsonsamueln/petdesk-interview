@@ -39,6 +39,7 @@ public class AppointmentsController : ControllerBase
     [Route("confirm")]
     public async Task Confirm()
     {
+        logger.LogInformation("Confirming appointment");
         await Task.CompletedTask;
     }
 }
