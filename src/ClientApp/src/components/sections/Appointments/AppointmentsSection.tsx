@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Appointment, Species } from "../../../types/appointments/ui"
+import { Appointment, AppointmentStatus, Species } from "../../../types/appointments/ui"
 import { AppointmentResponse } from "../../../types/appointments/api";
 import { getDateOrDefault } from "../../../helpers/date";
 import { API_ROUTES } from "../../../constants/api-routes";
@@ -17,7 +17,7 @@ export const AppointmentsSection: React.FC = () => {
 
             const clientAppointments: Appointment[] = toUIAppointments(appointmentsResponse);
 
-                setAppointments(clientAppointments);
+            setAppointments(clientAppointments);
             setIsLoading(false);
         }
         initializeAppointments();
@@ -41,6 +41,7 @@ export const AppointmentsSection: React.FC = () => {
 const toUIAppointments = (appointmentsResponse: AppointmentResponse): Appointment[] => {
     return appointmentsResponse.appointments.map(serverAppointment => ({
         ...serverAppointment,
+        appointmentStatus: AppointmentStatus.NewPatientRequest,
         createDateTime: getDateOrDefault(serverAppointment.createDateTime),
         requestedDateTimeOffset: getDateOrDefault(serverAppointment.requestedDateTimeOffset),
         animal: serverAppointment.animal && {
