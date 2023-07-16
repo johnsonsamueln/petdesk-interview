@@ -24,4 +24,5 @@ export interface Animal {
 export enum Species {
     Dog = "Dog",
     Bird = "Bird",
+    Cat = "Cat"
 }

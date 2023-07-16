@@ -1,6 +1,9 @@
 import * as React from "react";
-import { Animal, Appointment, User } from "../../../types/appointments/ui";
+import { Animal, Appointment, Species, User } from "../../../types/appointments/ui";
 import { ReactComponent as UserIcon } from "../../../content/user.svg";
+import { ReactComponent as DogIcon } from "../../../content/dog.svg";
+import { ReactComponent as CatIcon } from "../../../content/cat.svg";
+import { ReactComponent as BirdIcon } from "../../../content/bird.svg";
 import "./AppointmentDetail.css"
 
 type AppointmentDetailsProps = {
@@ -33,7 +36,21 @@ type AnimalDetailsProps = {
     animal: Animal | null;
 }
 export const AnimalDetails: React.FC<AnimalDetailsProps> = ({ animal }) => {
+    let icon: React.ReactNode;
+    switch (animal?.species) {
+        case Species.Dog:
+            icon = <DogIcon />
+            break;
+        case Species.Bird:
+            icon = <BirdIcon />
+            break;
+        case Species.Cat:
+            icon = <CatIcon />
+            break;
+        default:
+            icon = <></>
+    }
     return (
-        <div className="appointment-member-detail animal-detail">Animal: {animal?.givenName} {`(${animal?.species}, ${animal?.breed})`}</div>
+        <div className="appointment-member-detail animal-detail">{icon}Animal: {animal?.givenName} {`(${animal?.species}, ${animal?.breed})`}</div>
     )
 }
