@@ -7,6 +7,7 @@ import { AppointmentDetails } from "./AppointmentDetails";
 import "./AppointmentsSection.css"
 
 export const AppointmentsSection: React.FC = () => {
+    const [isLoading, setIsLoading] = React.useState(true);
     const [appointments, setAppointments] = React.useState<Appointment[]>([]);
 
     React.useEffect(() => {
@@ -25,6 +26,7 @@ export const AppointmentsSection: React.FC = () => {
             }))
 
             setAppointments(clientAppointments);
+            setIsLoading(false);
         }
         initializeAppointments();
     }, [])
@@ -33,6 +35,7 @@ export const AppointmentsSection: React.FC = () => {
         <div id="appointments-section">
             <h1>Appointments</h1>
             <ul id="appointments-list" className="appointments-list">
+                {isLoading && (<span className="spinner-border" />)}
                 {appointments.map(appointment => (
                     <li key={appointment.appointmentId} id={`appointment-${appointment.appointmentId}`}>
                         <AppointmentDetails appointment={appointment} />
