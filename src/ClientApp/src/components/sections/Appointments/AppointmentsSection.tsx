@@ -15,17 +15,9 @@ export const AppointmentsSection: React.FC = () => {
             const fetchResponse = await fetch(API_ROUTES.APPOINTMENTS_GET, { method: "GET" });
             const appointmentsResponse: AppointmentResponse = await fetchResponse.json();
 
-            const clientAppointments: Appointment[] = appointmentsResponse.appointments.map(serverAppointment => ({
-                ...serverAppointment,
-                createDateTime: getDateOrDefault(serverAppointment.createDateTime),
-                requestedDateTimeOffset: getDateOrDefault(serverAppointment.requestedDateTimeOffset),
-                animal: serverAppointment.animal && {
-                    ...serverAppointment.animal,
-                    species: serverAppointment.animal.species as Species
-                }
-            }))
+            const clientAppointments: Appointment[] = toUIAppointments(appointmentsResponse);
 
-            setAppointments(clientAppointments);
+                setAppointments(clientAppointments);
             setIsLoading(false);
         }
         initializeAppointments();
@@ -44,4 +36,16 @@ export const AppointmentsSection: React.FC = () => {
             </ul>
         </div>
     )
+}
+
+const toUIAppointments = (appointmentsResponse: AppointmentResponse): Appointment[] => {
+    return appointmentsResponse.appointments.map(serverAppointment => ({
+        ...serverAppointment,
+        createDateTime: getDateOrDefault(serverAppointment.createDateTime),
+        requestedDateTimeOffset: getDateOrDefault(serverAppointment.requestedDateTimeOffset),
+        animal: serverAppointment.animal && {
+            ...serverAppointment.animal,
+            species: serverAppointment.animal.species as Species
+        }
+    }))
 }
