@@ -22,7 +22,7 @@ public class Pstmn : IPstmn
         responseMessage.EnsureSuccessStatusCode();
         using var contentStream = await responseMessage.Content.ReadAsStreamAsync();
 
-        var appointments = await JsonSerializer.DeserializeAsync<Appointment[]>(contentStream);
+        var appointments = await JsonSerializer.DeserializeAsync<Appointment[]>(contentStream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
         if (appointments == null)
         {
             return Array.Empty<Appointment>();
