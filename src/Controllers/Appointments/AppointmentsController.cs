@@ -7,14 +7,9 @@ using AutoMapper;
 namespace petdesk_interview_app.Controllers.Appointments;
 
 [ApiController]
-[Route("[controller]")]
+[Route("appointments")]
 public class AppointmentsController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
     private readonly ILogger<AppointmentsController> logger;
     private readonly IPstmn pstmn;
     private readonly IMapper mapper;
@@ -27,6 +22,7 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet]
+    [Route("")]
     public async Task<ControllerModels.AppointmentResponse> Get()
     {
         var pstmnAppointments = await pstmn.GetAppointments();
@@ -37,5 +33,39 @@ public class AppointmentsController : ControllerBase
         {
             Appointments = appointments,
         };
+    }
+
+    [HttpPost]
+    [Route("confirm")]
+    public IActionResult Confirm([FromBody] ControllerModels.ConfirmAppointmentRequest request)
+    {
+        if (request.AppointmentId <= 0)
+        {
+            return BadRequest($"{nameof(request.AppointmentId)} must be a positive integer. (got {request.AppointmentId})");
+        }
+        else
+        {
+            logger.LogInformation($"Confirming appointment {request.AppointmentId}");
+            return Ok();
+        }
+    }
+
+    [HttpPost]
+    [Route("reschedule")]
+    public IActionResult Reschedule([FromBody] ControllerModels.RescheduleAppointmentRequest request)
+    {
+        if (request.AppointmentId <= 0)
+        {
+            return BadRequest($"{nameof(request.AppointmentId)} must be a positive integer. (got {request.AppointmentId})");
+        }
+        else if (request.RequestedDateTimeOffset == null || request.RequestedDateTimeOffset <= DateTimeOffset.UtcNow)
+        {
+            return BadRequest($"{nameof(request.RequestedDateTimeOffset)} must be a future date. (got '{request.RequestedDateTimeOffset?.ToString() ?? "null"}')");
+        }
+        else
+        {
+            logger.LogInformation($"Rescheduling appointment {request.AppointmentId} for {request.RequestedDateTimeOffset}");
+            return Ok();
+        }
     }
 }
