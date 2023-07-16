@@ -1,8 +1,12 @@
+using petdesk_interview_app.External.Pstmn;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IPstmn, Pstmn>();
 
 var app = builder.Build();
 
