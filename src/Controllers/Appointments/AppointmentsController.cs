@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using petdesk_interview_app.Controllers.Appointments.Models;
+using ControllerModels = petdesk_interview_app.Controllers.Appointments.Models;
+using ExternalModels = petdesk_interview_app.External.Pstmn.Models;
 using petdesk_interview_app.External.Pstmn;
 
 namespace petdesk_interview_app.Controllers.Appointments;
@@ -23,20 +24,13 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<AppointmentResponse> Get()
+    public async Task<ControllerModels.AppointmentResponse> Get()
     {
         var pstmnAppointments = await pstmn.GetAppointments();
 
-        var appointments = Enumerable.Range(1, 5).Select(index => new Appointment
+        return new ControllerModels.AppointmentResponse()
         {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        }).ToArray();
-
-        return new AppointmentResponse()
-        {
-            Appointments = appointments
+            Appointments  = Array.Empty<ControllerModels.Appointment>(),
         };
     }
 }
