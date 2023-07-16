@@ -35,12 +35,7 @@ export const AppointmentsSection: React.FC = () => {
                 <ul>
                     {appointments.map(appointment => (
                         <li key={appointment.appointmentId} id={`appointment-${appointment.appointmentId}`}>
-                            <AppointmentDetails />
-                            <ul>
-                                <li>{appointment.appointmentType}</li>
-                                <li>User: {appointment.user?.givenName} {appointment.user?.familyName}</li>
-                                <li>Animal: {appointment.animal?.givenName} {`(${appointment.animal?.species}, ${appointment.animal?.breed})`}</li>
-                            </ul>
+                            <AppointmentDetails appointment={appointment} />
                         </li>
                     ))}
                 </ul>
