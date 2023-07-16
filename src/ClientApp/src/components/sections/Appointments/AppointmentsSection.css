@@ -4,8 +4,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: gray;
-    opacity: 50%;
+    background-color: rgba(128, 128, 128, 0.5);
 
     display: flex;
     align-items: center;
@@ -13,11 +12,9 @@
 }
 
 .fixed-spinner {
-    --spinner-w: 5rem;
-    --spinner-h: 5rem;
-
-    width: var(--spinner-w);
-    height: var(--spinner-h);
+    --bs-spinner-width: 5rem;
+    --bs-spinner-height: 5rem;
+    --bs-spinner-border-width: 0.5rem;
 }
 
 .appointments-list {
