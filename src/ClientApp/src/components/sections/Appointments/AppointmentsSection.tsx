@@ -2,13 +2,14 @@ import * as React from "react"
 import { Appointment, Species } from "../../../types/appointments/ui"
 import { AppointmentResponse } from "../../../types/appointments/api";
 import { getDateOrDefault } from "../../../helpers/date";
+import { API_ROUTES } from "../../../constants/api-routes";
 
 export const AppointmentsSection: React.FC = () => {
     const [appointments, setAppointments] = React.useState<Appointment[]>([]);
 
     React.useEffect(() => {
         async function initializeAppointments() {
-            const fetchResponse = await fetch("/appointments", { method: "GET" });
+            const fetchResponse = await fetch(API_ROUTES.APPOINTMENTS_GET, { method: "GET" });
             const appointmentsResponse: AppointmentResponse = await fetchResponse.json();
 
             const clientAppointments: Appointment[] = appointmentsResponse.appointments.map(serverAppointment => ({
