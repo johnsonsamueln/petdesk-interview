@@ -61,6 +61,11 @@
     padding: 0.125em 0.5em;
 }
 
+.appointment-action-button:hover {
+    background-color: var(--action-button-color);
+    color: white;
+}
+
 .confirm-action {
     --action-button-color: forestgreen;
     --action-button-bg-color: rgb(214, 253, 214);
