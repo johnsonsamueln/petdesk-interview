@@ -10,6 +10,8 @@ import "./AppointmentDetail.css"
 
 type AppointmentDetailsProps = {
     appointment: Appointment
+    confirmAppointment: (appointmentId: number) => Promise<void>
+    rescheduleAppointment: (appointmentId: number, requestedDate: Date) => Promise<void>
 }
 export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointment }) => {
     return (
@@ -71,7 +73,10 @@ export const AnimalDetails: React.FC<AnimalDetailsProps> = ({ animal }) => {
     )
 }
 
-export const ScheduleDetails: React.FC<AppointmentDetailsProps> = ({ appointment }) => {
+type ScheduleDetailsProps = {
+    appointment: Appointment
+}
+export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment }) => {
     return (
         <div className="appointment-member-detail schedule-detail">
             <ClockIcon />

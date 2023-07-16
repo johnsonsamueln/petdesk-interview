@@ -66,7 +66,11 @@ export const AppointmentsSection: React.FC = () => {
                 {isLoading && (<span className="spinner-border" />)}
                 {appointments.map(appointment => (
                     <li key={appointment.appointmentId} id={`appointment-${appointment.appointmentId}`}>
-                        <AppointmentDetails appointment={appointment} />
+                        <AppointmentDetails
+                            appointment={appointment}
+                            confirmAppointment={confirmAppointment}
+                            rescheduleAppointment={rescheduleAppointment}
+                        />
                     </li>
                 ))}
             </ul>
