@@ -47,3 +47,7 @@
     --member-color: darkgoldenrod;
     --member-bg-color: lightyellow;
 }
+
+.appointment-actions :not(:last-child) {
+    margin-right: 0.5em;
+}
