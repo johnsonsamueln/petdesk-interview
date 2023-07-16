@@ -1,3 +1,9 @@
+.fixed-spinner {
+    position: fixed;
+    top: 50%;
+    left: 50%
+}
+
 .appointments-list {
     list-style: none;
 
