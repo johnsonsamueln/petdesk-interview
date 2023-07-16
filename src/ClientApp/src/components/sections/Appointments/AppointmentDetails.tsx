@@ -4,6 +4,7 @@ import { ReactComponent as UserIcon } from "../../../content/user.svg";
 import { ReactComponent as DogIcon } from "../../../content/dog.svg";
 import { ReactComponent as CatIcon } from "../../../content/cat.svg";
 import { ReactComponent as BirdIcon } from "../../../content/bird.svg";
+import { ReactComponent as PawIcon } from "../../../content/paw.svg";
 import "./AppointmentDetail.css"
 
 type AppointmentDetailsProps = {
@@ -48,7 +49,7 @@ export const AnimalDetails: React.FC<AnimalDetailsProps> = ({ animal }) => {
             icon = <CatIcon />
             break;
         default:
-            icon = <></>
+            icon = <PawIcon />
     }
     return (
         <div className="appointment-member-detail animal-detail">{icon}Animal: {animal?.givenName} {`(${animal?.species}, ${animal?.breed})`}</div>
