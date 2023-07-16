@@ -1,3 +1,4 @@
+using System.Reflection;
 using petdesk_interview_app.External.Pstmn;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IPstmn, Pstmn>();
 
 var app = builder.Build();
