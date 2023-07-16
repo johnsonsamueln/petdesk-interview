@@ -10,11 +10,6 @@ namespace petdesk_interview_app.Controllers.Appointments;
 [Route("[controller]")]
 public class AppointmentsController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
     private readonly ILogger<AppointmentsController> logger;
     private readonly IPstmn pstmn;
     private readonly IMapper mapper;
