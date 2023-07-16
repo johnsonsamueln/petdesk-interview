@@ -37,9 +37,16 @@ public class AppointmentsController : ControllerBase
 
     [HttpPost]
     [Route("confirm")]
-    public async Task Confirm([FromBody] ControllerModels.ConfirmAppointmentRequest request)
+    public IActionResult Confirm([FromBody] ControllerModels.ConfirmAppointmentRequest request)
     {
-        logger.LogInformation($"Confirming appointment {request.AppointmentId}");
-        await Task.CompletedTask;
+        if (request.AppointmentId <= 0)
+        {
+            return BadRequest($"{nameof(request.AppointmentId)} must be a positive integer.");
+        }
+        else
+        {
+            logger.LogInformation($"Confirming appointment {request.AppointmentId}");
+            return Ok();
+        }
     }
 }
