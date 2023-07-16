@@ -6,14 +6,15 @@
     height: 100vh;
     background-color: gray;
     opacity: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .fixed-spinner {
     --spinner-w: 5rem;
     --spinner-h: 5rem;
-    position: relative;
-    left: calc(50% - var(--spinner-w));
-    top: calc(50% - var(--spinner-h));
 
     width: var(--spinner-w);
     height: var(--spinner-h);
