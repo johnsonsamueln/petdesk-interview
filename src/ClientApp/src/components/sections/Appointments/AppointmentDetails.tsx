@@ -5,6 +5,7 @@ import { ReactComponent as DogIcon } from "../../../content/dog.svg";
 import { ReactComponent as CatIcon } from "../../../content/cat.svg";
 import { ReactComponent as BirdIcon } from "../../../content/bird.svg";
 import { ReactComponent as PawIcon } from "../../../content/paw.svg";
+import { ReactComponent as ClockIcon } from "../../../content/clock.svg";
 import "./AppointmentDetail.css"
 
 type AppointmentDetailsProps = {
@@ -14,11 +15,10 @@ export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointm
     return (
         <div id={`appointment-detail-${appointment.appointmentId}`} className="appointment-detail">
             <h3>{appointment.appointmentType}</h3>
-            <div>Request Created: {appointment.createDateTime?.toLocaleString()}</div>
-            <div>Requested Appt Date: {appointment.requestedDateTimeOffset?.toLocaleString()}</div>
             <div className="appointment-detail-body">
                 <UserDetails user={appointment.user} />
                 <AnimalDetails animal={appointment.animal} />
+                <ScheduleDetails appointment={appointment} />
             </div>
         </div>
     )
@@ -58,6 +58,15 @@ export const AnimalDetails: React.FC<AnimalDetailsProps> = ({ animal }) => {
         <div className="appointment-member-detail animal-detail">
             {icon}
             <span>{animal?.givenName} {`(${animal?.species}, ${animal?.breed})`}</span>
+        </div>
+    )
+}
+
+export const ScheduleDetails: React.FC<AppointmentDetailsProps> = ({ appointment }) => {
+    return (
+        <div className="appointment-member-detail schedule-detail">
+            <ClockIcon />
+            <span>{appointment.requestedDateTimeOffset?.toLocaleString()}</span>
         </div>
     )
 }
