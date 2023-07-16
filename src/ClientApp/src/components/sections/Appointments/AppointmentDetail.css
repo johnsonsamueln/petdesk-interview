@@ -1,4 +1,11 @@
 .appointment-detail {
     border: 0.125em solid rebeccapurple;
     border-radius: 2em;
+
+    padding: 1em;
+}
+
+.appointment-detail-body {
+	display: flex;
+	justify-content: space-between;
 }
