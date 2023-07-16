@@ -1,8 +1,12 @@
 import * as React from "react"
 import "./Dashboard.css"
+import { AppointmentsSection } from "./sections/Appointments/AppointmentsSection"
 
 export const Dashboard: React.FC = () => {
     return (
-        <div className="title">Dashboard root</div>
+        <div id="dashboard">
+            <h1 className="title">Dashboard</h1>
+            <AppointmentsSection />
+        </div>
     )
 }
