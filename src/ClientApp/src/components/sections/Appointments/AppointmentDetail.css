@@ -31,7 +31,7 @@
 
 .animal-detail {
     --member-color: forestgreen;
-    --member-bg-color: palegreen;
+    --member-bg-color: rgb(214, 253, 214);
 }
 
 .schedule-detail {
