@@ -14,15 +14,10 @@ public class Pstmn : IPstmn
 
     public async Task<Appointment[]> GetAppointments()
     {
-        var requestMessage = new HttpRequestMessage(HttpMethod.Get, "https://723fac0a-1bff-4a20-bdaa-c625eae11567.mock.pstmn.io/appointments");
+        var requestUri = new Uri("https://723fac0a-1bff-4a20-bdaa-c625eae11567.mock.pstmn.io/appointments");
+        var deserializeOptions = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
 
-        var httpClient = httpClientFactory.CreateClient();
-        var responseMessage = await httpClient.SendAsync(requestMessage);
-
-        responseMessage.EnsureSuccessStatusCode();
-        using var contentStream = await responseMessage.Content.ReadAsStreamAsync();
-
-        var appointments = await JsonSerializer.DeserializeAsync<Appointment[]>(contentStream, new JsonSerializerOptions() { PropertyNameCaseInsensitive = true });
+        var appointments = await HttpGet<Appointment[]>(requestUri, deserializeOptions);
         if (appointments == null)
         {
             return Array.Empty<Appointment>();
@@ -31,5 +26,20 @@ public class Pstmn : IPstmn
         {
             return appointments;
         }
+    }
+
+    private async Task<T?> HttpGet<T>(Uri requestUri, JsonSerializerOptions? deserializeOptions = null)
+    {
+        var requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUri);
+
+        var httpClient = httpClientFactory.CreateClient();
+        var responseMessage = await httpClient.SendAsync(requestMessage);
+
+        responseMessage.EnsureSuccessStatusCode();
+        using var contentStream = await responseMessage.Content.ReadAsStreamAsync();
+
+        var responseBody = await JsonSerializer.DeserializeAsync<T>(contentStream, deserializeOptions);
+
+        return responseBody;
     }
 }
