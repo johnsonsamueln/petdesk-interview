@@ -31,9 +31,11 @@ public class AppointmentsController : ControllerBase
     {
         var pstmnAppointments = await pstmn.GetAppointments();
 
+        var appointments = mapper.Map<ExternalModels.Appointment[], ControllerModels.Appointment[]>(pstmnAppointments);
+
         return new ControllerModels.AppointmentResponse()
         {
-            Appointments  = Array.Empty<ControllerModels.Appointment>(),
+            Appointments = appointments,
         };
     }
 }
