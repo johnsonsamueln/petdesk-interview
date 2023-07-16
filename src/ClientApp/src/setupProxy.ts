@@ -1,15 +1,16 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
-const { env } = require('process');
+import * as express from "express"
+import { createProxyMiddleware, Filter } from 'http-proxy-middleware';
+import { env } from 'process';
 
 const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
   env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:21155';
 
-const context =  [
-  "/weatherforecast",
+const proxyFilter: Filter =  [
+  "/appointments",
 ];
 
-module.exports = function(app) {
-  const appProxy = createProxyMiddleware(context, {
+module.exports = function(app: express.Application) {
+  const appProxy = createProxyMiddleware(proxyFilter, {
     proxyTimeout: 10000,
     target: target,
     secure: false,
