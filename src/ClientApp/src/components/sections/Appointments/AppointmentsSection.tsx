@@ -23,6 +23,25 @@ export const AppointmentsSection: React.FC = () => {
         initializeAppointments();
     }, [])
 
+    const confirmAppointment = async (appointmentId: number) => {
+        const confirmRequest = { appointmentId };
+        const fetchResponse = await fetch(API_ROUTES.APPOINTMENT_CONFIRM, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(confirmRequest)
+        });
+
+        if (fetchResponse.ok) {
+            setAppointments(prevAppointments => {
+                const confirmedAppointment = prevAppointments.find(appointment => appointment.appointmentId === appointmentId);
+                if (confirmedAppointment) {
+                    confirmedAppointment.appointmentStatus = AppointmentStatus.ConfirmedByVet;
+                }
+                return prevAppointments;
+            })
+        }
+    }
+
     return (
         <div id="appointments-section" className="container">
             <h1>Appointments</h1>
