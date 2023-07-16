@@ -1,6 +1,6 @@
-namespace petdesk_interview_app;
+namespace petdesk_interview_app.Controllers.Appointments.Models;
 
-public class WeatherForecast
+public class Appointment
 {
     public DateTime Date { get; set; }
 

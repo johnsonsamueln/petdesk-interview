@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using petdesk_interview_app.Controllers.Appointments.Models;
 
 namespace petdesk_interview_app.Controllers.Appointments;
 
@@ -19,9 +20,9 @@ public class AppointmentsController : ControllerBase
     }
 
     [HttpGet]
-    public IEnumerable<WeatherForecast> Get()
+    public IEnumerable<Appointment> Get()
     {
-        return Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        return Enumerable.Range(1, 5).Select(index => new Appointment
         {
             Date = DateTime.Now.AddDays(index),
             TemperatureC = Random.Shared.Next(-20, 55),
