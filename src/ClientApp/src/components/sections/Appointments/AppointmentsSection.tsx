@@ -32,7 +32,7 @@ export const AppointmentsSection: React.FC = () => {
     }, [])
 
     return (
-        <div id="appointments-section">
+        <div id="appointments-section" className="container">
             <h1>Appointments</h1>
             <ul id="appointments-list" className="appointments-list">
                 {isLoading && (<span className="spinner-border" />)}
