@@ -50,13 +50,13 @@ export const AppointmentsSection: React.FC = () => {
     }
 
     const setAppointmentStatus = async (appointmentId: number, appointmentStatus: AppointmentStatus) => {
-        setAppointments(prevAppointments => {
-            const confirmedAppointment = prevAppointments.find(appointment => appointment.appointmentId === appointmentId);
-            if (confirmedAppointment) {
-                confirmedAppointment.appointmentStatus = appointmentStatus;
+        setAppointments(prevAppointments => prevAppointments.map(appointment => {
+            if (appointment.appointmentId === appointmentId) {
+                return { ...appointment, appointmentStatus }
+            } else {
+                return appointment;
             }
-            return prevAppointments;
-        })
+        }))
     }
 
     return (
