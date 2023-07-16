@@ -54,10 +54,13 @@ export const AnimalDetails: React.FC<AnimalDetailsProps> = ({ animal }) => {
         default:
             icon = <PawIcon />
     }
+
+    let breed = animal?.breed && `(${animal.breed})` 
+
     return (
         <div className="appointment-member-detail animal-detail">
             {icon}
-            <span>{animal?.givenName} {`(${animal?.species}, ${animal?.breed})`}</span>
+            <span>{animal?.givenName} {breed}</span>
         </div>
     )
 }
