@@ -1,7 +1,22 @@
-.fixed-spinner {
+.fixed-spinner-bg {
     position: fixed;
-    top: 50%;
-    left: 50%
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: gray;
+    opacity: 50%;
+}
+
+.fixed-spinner {
+    --spinner-w: 5rem;
+    --spinner-h: 5rem;
+    position: relative;
+    left: calc(50% - var(--spinner-w));
+    top: calc(50% - var(--spinner-h));
+
+    width: var(--spinner-w);
+    height: var(--spinner-h);
 }
 
 .appointments-list {
