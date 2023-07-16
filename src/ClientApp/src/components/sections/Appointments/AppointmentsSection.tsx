@@ -19,12 +19,13 @@ export const AppointmentsSection: React.FC = () => {
             const clientAppointments: Appointment[] = toUIAppointments(appointmentsResponse);
 
             setAppointments(clientAppointments);
-            // setIsLoading(false);
+            setIsLoading(false);
         }
         initializeAppointments();
     }, [])
 
     const confirmAppointment = async (appointmentId: number) => {
+        setIsLoading(true);
         const confirmRequest: ConfirmAppointmentRequest = { appointmentId };
         const fetchResponse = await fetch(API_ROUTES.APPOINTMENT_CONFIRM, {
             method: "POST",
@@ -35,9 +36,11 @@ export const AppointmentsSection: React.FC = () => {
         if (fetchResponse.ok) {
             setAppointmentStatus(appointmentId, AppointmentStatus.ConfirmedByVet);
         }
+        setIsLoading(false);
     }
 
     const rescheduleAppointment = async (appointmentId: number, requestedDate: Date) => {
+        setIsLoading(true);
         const rescheduleRequest: RescheduleAppointmentRequest = { appointmentId, requestedDateTimeOffset: requestedDate.toISOString() };
         const fetchResponse = await fetch(API_ROUTES.APPOINTMENT_RESCHEDULE, {
             method: "POST",
@@ -48,6 +51,7 @@ export const AppointmentsSection: React.FC = () => {
         if (fetchResponse.ok) {
             setAppointmentStatus(appointmentId, AppointmentStatus.RescheduleRequestedByVet);
         }
+        setIsLoading(false);
     }
 
     const setAppointmentStatus = async (appointmentId: number, appointmentStatus: AppointmentStatus) => {
