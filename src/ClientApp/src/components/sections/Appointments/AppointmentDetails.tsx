@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Animal, Appointment, Species, User } from "../../../types/appointments/ui";
+import { Animal, Appointment, AppointmentStatus, Species, User } from "../../../types/appointments/ui";
 import { ReactComponent as UserIcon } from "../../../content/user.svg";
 import { ReactComponent as DogIcon } from "../../../content/dog.svg";
 import { ReactComponent as CatIcon } from "../../../content/cat.svg";
@@ -10,8 +10,10 @@ import "./AppointmentDetail.css"
 
 type AppointmentDetailsProps = {
     appointment: Appointment
+    confirmAppointment: (appointmentId: number) => Promise<void>
+    rescheduleAppointment: (appointmentId: number, requestedDate: Date) => Promise<void>
 }
-export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointment }) => {
+export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointment, confirmAppointment, rescheduleAppointment }) => {
     return (
         <div id={`appointment-detail-${appointment.appointmentId}`} className="appointment-detail">
             <h3>{appointment.appointmentType}</h3>
@@ -22,8 +24,7 @@ export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointm
                     <ScheduleDetails appointment={appointment} />
                 </div>
                 <div className="appointment-actions">
-                    <button className="appointment-action-button confirm-action" title="Confirm appointment for the requested time">Confirm</button>
-                    <button className="appointment-action-button reschedule-action" title="Request a different time for this appointment">Reschedule</button>
+                    <AppointmentActions appointment={appointment} confirmAppointment={confirmAppointment} rescheduleAppointment={rescheduleAppointment} />
                 </div>
             </div>
         </div>
@@ -71,11 +72,48 @@ export const AnimalDetails: React.FC<AnimalDetailsProps> = ({ animal }) => {
     )
 }
 
-export const ScheduleDetails: React.FC<AppointmentDetailsProps> = ({ appointment }) => {
+type ScheduleDetailsProps = {
+    appointment: Appointment
+}
+export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment }) => {
     return (
         <div className="appointment-member-detail schedule-detail">
             <ClockIcon />
             <span>{appointment.requestedDateTimeOffset?.toLocaleString()}</span>
         </div>
     )
+}
+
+export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointment, confirmAppointment, rescheduleAppointment }) => {
+    const openRescheduleModal = () => {
+        rescheduleAppointment(appointment.appointmentId, new Date("2023-08-01"))
+     }
+
+    switch (appointment.appointmentStatus) {
+        case AppointmentStatus.ConfirmedByVet:
+            return (<span>Confirmation sent!</span>)
+        case AppointmentStatus.RescheduleRequestedByVet:
+            return (<span>Reschedule request sent. Awaiting response from patient.</span>)
+        case AppointmentStatus.NewPatientRequest:
+            return (
+                <>
+                    <button
+                        className="appointment-action-button confirm-action"
+                        title="Confirm appointment for the requested time"
+                        onClick={() => confirmAppointment(appointment.appointmentId)}
+                    >
+                        Confirm
+                    </button>
+                    <button
+                        className="appointment-action-button reschedule-action"
+                        title="Request a different time for this appointment"
+                        onClick={() => openRescheduleModal()}
+                    >
+                        Reschedule
+                    </button>
+                </>
+            )
+        default:
+            return null;
+    }
 }

@@ -8,6 +8,8 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
 
 const proxyFilter: Filter =  [
   API_ROUTES.APPOINTMENTS_GET,
+  API_ROUTES.APPOINTMENT_CONFIRM,
+  API_ROUTES.APPOINTMENT_RESCHEDULE,
 ];
 
 module.exports = function(app: express.Application) {

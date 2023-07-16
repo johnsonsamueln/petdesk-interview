@@ -1,10 +1,17 @@
 export interface Appointment {
     appointmentId: number;
+    appointmentStatus: AppointmentStatus;
     appointmentType: string | null;
     createDateTime: Date | null;
     requestedDateTimeOffset: Date | null;
     user: User | null;
     animal: Animal | null;
+}
+
+export enum AppointmentStatus {
+    NewPatientRequest = "NewPatientRequest",
+    ConfirmedByVet = "ConfirmedByVet",
+    RescheduleRequestedByVet = "RescheduleRequestedByVet"
 }
 
 export interface User {

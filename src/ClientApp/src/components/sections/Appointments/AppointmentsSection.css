@@ -1,3 +1,22 @@
+.fixed-spinner-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(128, 128, 128, 0.5);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fixed-spinner {
+    --bs-spinner-width: 5rem;
+    --bs-spinner-height: 5rem;
+    --bs-spinner-border-width: 0.5rem;
+}
+
 .appointments-list {
     list-style: none;
 
