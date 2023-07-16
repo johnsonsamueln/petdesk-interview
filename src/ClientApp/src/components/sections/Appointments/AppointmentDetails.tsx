@@ -13,8 +13,7 @@ type AppointmentDetailsProps = {
     confirmAppointment: (appointmentId: number) => Promise<void>
     rescheduleAppointment: (appointmentId: number, requestedDate: Date) => Promise<void>
 }
-export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointment, confirmAppointment }) => {
-    const openRescheduleModal = () => { }
+export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointment, confirmAppointment, rescheduleAppointment }) => {
     return (
         <div id={`appointment-detail-${appointment.appointmentId}`} className="appointment-detail">
             <h3>{appointment.appointmentType}</h3>
@@ -25,20 +24,7 @@ export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointm
                     <ScheduleDetails appointment={appointment} />
                 </div>
                 <div className="appointment-actions">
-                    <button
-                        className="appointment-action-button confirm-action"
-                        title="Confirm appointment for the requested time"
-                        onClick={() => confirmAppointment(appointment.appointmentId)}
-                    >
-                        Confirm
-                    </button>
-                    <button
-                        className="appointment-action-button reschedule-action"
-                        title="Request a different time for this appointment"
-                        onClick={() => openRescheduleModal()}
-                    >
-                        Reschedule
-                    </button>
+                    <AppointmentActions appointment={appointment} confirmAppointment={confirmAppointment} rescheduleAppointment={rescheduleAppointment} />
                 </div>
             </div>
         </div>
@@ -95,5 +81,27 @@ export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment })
             <ClockIcon />
             <span>{appointment.requestedDateTimeOffset?.toLocaleString()}</span>
         </div>
+    )
+}
+
+export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointment, confirmAppointment }) => {
+    const openRescheduleModal = () => { }
+    return (
+        <>
+            <button
+                className="appointment-action-button confirm-action"
+                title="Confirm appointment for the requested time"
+                onClick={() => confirmAppointment(appointment.appointmentId)}
+            >
+                Confirm
+            </button>
+            <button
+                className="appointment-action-button reschedule-action"
+                title="Request a different time for this appointment"
+                onClick={() => openRescheduleModal()}
+            >
+                Reschedule
+            </button>
+        </>
     )
 }
