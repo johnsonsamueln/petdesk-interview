@@ -3,6 +3,7 @@ import { Appointment, Species } from "../../../types/appointments/ui"
 import { AppointmentResponse } from "../../../types/appointments/api";
 import { getDateOrDefault } from "../../../helpers/date";
 import { API_ROUTES } from "../../../constants/api-routes";
+import { AppointmentDetails } from "./AppointmentDetails";
 
 export const AppointmentsSection: React.FC = () => {
     const [appointments, setAppointments] = React.useState<Appointment[]>([]);
@@ -34,6 +35,7 @@ export const AppointmentsSection: React.FC = () => {
                 <ul>
                     {appointments.map(appointment => (
                         <li key={appointment.appointmentId} id={`appointment-${appointment.appointmentId}`}>
+                            <AppointmentDetails />
                             <ul>
                                 <li>{appointment.appointmentType}</li>
                                 <li>User: {appointment.user?.givenName} {appointment.user?.familyName}</li>
