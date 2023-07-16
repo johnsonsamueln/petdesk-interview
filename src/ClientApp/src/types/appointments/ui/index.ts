@@ -1,7 +1,3 @@
-export interface AppointmentResponse {
-    appointments: Appointment[];
-}
-
 export interface Appointment {
     appointmentId: number;
     appointmentType: string | null;
