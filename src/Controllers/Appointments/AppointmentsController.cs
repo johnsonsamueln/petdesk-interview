@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace petdesk_interview_app.Controllers;
+namespace petdesk_interview_app.Controllers.Appointments;
 
 [ApiController]
 [Route("[controller]")]
@@ -10,7 +10,7 @@ public class AppointmentsController : ControllerBase
     {
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
-    
+
     private readonly ILogger<AppointmentsController> _logger;
 
     public AppointmentsController(ILogger<AppointmentsController> logger)
