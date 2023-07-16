@@ -84,8 +84,10 @@ export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment })
     )
 }
 
-export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointment, confirmAppointment }) => {
-    const openRescheduleModal = () => { }
+export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointment, confirmAppointment, rescheduleAppointment }) => {
+    const openRescheduleModal = () => {
+        rescheduleAppointment(appointment.appointmentId, new Date("2023-08-01"))
+     }
 
     switch (appointment.appointmentStatus) {
         case AppointmentStatus.ConfirmedByVet:

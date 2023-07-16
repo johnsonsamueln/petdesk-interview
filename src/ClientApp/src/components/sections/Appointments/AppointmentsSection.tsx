@@ -37,7 +37,7 @@ export const AppointmentsSection: React.FC = () => {
     }
 
     const rescheduleAppointment = async (appointmentId: number, requestedDate: Date) => {
-        const rescheduleRequest = { appointmentId, requestedDate };
+        const rescheduleRequest = { appointmentId, requestedDateTimeOffset: requestedDate.toISOString() };
         const fetchResponse = await fetch(API_ROUTES.APPOINTMENT_RESCHEDULE, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
