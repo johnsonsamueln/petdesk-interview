@@ -16,9 +16,15 @@ export const AppointmentDetails: React.FC<AppointmentDetailsProps> = ({ appointm
         <div id={`appointment-detail-${appointment.appointmentId}`} className="appointment-detail">
             <h3>{appointment.appointmentType}</h3>
             <div className="appointment-detail-body">
-                <UserDetails user={appointment.user} />
-                <AnimalDetails animal={appointment.animal} />
-                <ScheduleDetails appointment={appointment} />
+                <div className="appointment-members">
+                    <UserDetails user={appointment.user} />
+                    <AnimalDetails animal={appointment.animal} />
+                    <ScheduleDetails appointment={appointment} />
+                </div>
+                <div className="appointment-actions">
+                    <button className="btn btn-success">Confirm</button>
+                    <button className="btn btn-warning">Reschedule</button>
+                </div>
             </div>
         </div>
     )
@@ -55,7 +61,7 @@ export const AnimalDetails: React.FC<AnimalDetailsProps> = ({ animal }) => {
             icon = <PawIcon />
     }
 
-    let breed = animal?.breed && `(${animal.breed})` 
+    let breed = animal?.breed && `(${animal.breed})`
 
     return (
         <div className="appointment-member-detail animal-detail">
