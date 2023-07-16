@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Animal, Appointment, Species, User } from "../../../types/appointments/ui";
+import { Animal, Appointment, AppointmentStatus, Species, User } from "../../../types/appointments/ui";
 import { ReactComponent as UserIcon } from "../../../content/user.svg";
 import { ReactComponent as DogIcon } from "../../../content/dog.svg";
 import { ReactComponent as CatIcon } from "../../../content/cat.svg";
@@ -86,22 +86,32 @@ export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment })
 
 export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointment, confirmAppointment }) => {
     const openRescheduleModal = () => { }
-    return (
-        <>
-            <button
-                className="appointment-action-button confirm-action"
-                title="Confirm appointment for the requested time"
-                onClick={() => confirmAppointment(appointment.appointmentId)}
-            >
-                Confirm
-            </button>
-            <button
-                className="appointment-action-button reschedule-action"
-                title="Request a different time for this appointment"
-                onClick={() => openRescheduleModal()}
-            >
-                Reschedule
-            </button>
-        </>
-    )
+
+    switch (appointment.appointmentStatus) {
+        case AppointmentStatus.ConfirmedByVet:
+            return (<span>Confirmation sent!</span>)
+        case AppointmentStatus.RescheduleRequestedByVet:
+            return (<span>Reschedule request sent. Awaiting response from patient.</span>)
+        case AppointmentStatus.NewPatientRequest:
+            return (
+                <>
+                    <button
+                        className="appointment-action-button confirm-action"
+                        title="Confirm appointment for the requested time"
+                        onClick={() => confirmAppointment(appointment.appointmentId)}
+                    >
+                        Confirm
+                    </button>
+                    <button
+                        className="appointment-action-button reschedule-action"
+                        title="Request a different time for this appointment"
+                        onClick={() => openRescheduleModal()}
+                    >
+                        Reschedule
+                    </button>
+                </>
+            )
+        default:
+            return null;
+    }
 }
