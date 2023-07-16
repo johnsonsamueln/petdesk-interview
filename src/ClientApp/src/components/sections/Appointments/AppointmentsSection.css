@@ -6,6 +6,6 @@
 }
 
 
-.appointments-list li {
+.appointments-list > li {
     margin: 2em auto;
 }
