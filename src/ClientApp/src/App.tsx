@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
-import { Route, Routes } from 'react-router-dom';
 import './custom.css';
+import { Dashboard } from './components/Dashboard';
 
 export default class App extends Component {
   static displayName = App.name;
 
   render() {
     return (
+      <>
       <div>App root</div>
+      <Dashboard />
+      </>
     );
   }
 }
