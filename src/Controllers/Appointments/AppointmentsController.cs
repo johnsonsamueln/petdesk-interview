@@ -37,9 +37,9 @@ public class AppointmentsController : ControllerBase
 
     [HttpPost]
     [Route("confirm")]
-    public async Task Confirm()
+    public async Task Confirm([FromBody] ControllerModels.ConfirmAppointmentRequest request)
     {
-        logger.LogInformation("Confirming appointment");
+        logger.LogInformation($"Confirming appointment {request.AppointmentId}");
         await Task.CompletedTask;
     }
 }
