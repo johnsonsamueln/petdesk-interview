@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddHttpClient();
 builder.Services.AddScoped<IPstmn, Pstmn>();
 
 var app = builder.Build();
