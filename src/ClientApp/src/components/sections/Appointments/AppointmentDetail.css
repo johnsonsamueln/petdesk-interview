@@ -1,0 +1,79 @@
+.appointment-detail {
+    border: 0.125em solid rebeccapurple;
+    border-radius: 2em;
+
+    background-color: white;
+
+    padding: 1em;
+}
+
+.appointment-detail-body {
+	display: flex;
+	justify-content: space-between;
+    align-items: center;
+}
+
+.appointment-members {
+    display: flex;
+}
+
+.appointment-members > :not(:last-child) {
+    margin-right: 1em;
+}
+
+.appointment-member-detail {    
+    border: 0.125em solid var(--member-color);
+    border-radius: 2em;
+
+    background-color: var(--member-bg-color);
+
+    padding: 1em;
+}
+
+.appointment-member-detail svg {
+    color: var(--member-color);
+    margin-right: 0.5em;
+}
+
+.user-detail {
+    --member-color: darkblue;
+    --member-bg-color: lightcyan;
+}
+
+.animal-detail {
+    --member-color: forestgreen;
+    --member-bg-color: rgb(214, 253, 214);
+}
+
+.schedule-detail {
+    --member-color: darkgoldenrod;
+    --member-bg-color: lightyellow;
+}
+
+.appointment-actions > :not(:last-child) {
+    margin-right: 0.5em;
+}
+
+.appointment-action-button {
+    border: 0.125em solid var(--action-button-color);
+    border-radius: 0.5em;
+
+    background-color: var(--action-button-bg-color);
+
+    padding: 0.125em 0.5em;
+}
+
+.appointment-action-button:hover {
+    background-color: var(--action-button-color);
+    color: white;
+}
+
+.confirm-action {
+    --action-button-color: forestgreen;
+    --action-button-bg-color: rgb(214, 253, 214);
+}
+
+.reschedule-action {
+    --action-button-color: darkgoldenrod;
+    --action-button-bg-color: lightyellow;
+}
