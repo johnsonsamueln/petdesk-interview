@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Animal, Appointment, User } from "../../../types/appointments/ui";
+import { ReactComponent as UserIcon } from "../../../content/user.svg";
 import "./AppointmentDetail.css"
 
 type AppointmentDetailsProps = {
@@ -24,7 +25,7 @@ type UserDetailsProps = {
 }
 export const UserDetails: React.FC<UserDetailsProps> = ({ user }) => {
     return (
-        <div className="appointment-member-detail user-detail">User: {user?.givenName} {user?.familyName}</div>
+        <div className="appointment-member-detail user-detail"><UserIcon />User: {user?.givenName} {user?.familyName}</div>
     )
 }
 
