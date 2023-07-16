@@ -9,3 +9,20 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.appointment-member-detail {
+    border: 0.125em solid var(--member-border-color);
+    border-radius: 2em;
+
+    background-color: var(--member-bg-color);
+}
+
+.user-detail {
+    --member-border-color: darkblue;
+    --member-bg-color: lightcyan;
+}
+
+.animal-detail {
+    --member-border-color: forestgreen;
+    --member-bg-color: lightgreen;
+}

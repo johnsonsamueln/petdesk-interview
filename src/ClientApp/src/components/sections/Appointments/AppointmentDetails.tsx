@@ -24,7 +24,7 @@ type UserDetailsProps = {
 }
 export const UserDetails: React.FC<UserDetailsProps> = ({ user }) => {
     return (
-        <div>User: {user?.givenName} {user?.familyName}</div>
+        <div className="appointment-member-detail user-detail">User: {user?.givenName} {user?.familyName}</div>
     )
 }
 
@@ -33,6 +33,6 @@ type AnimalDetailsProps = {
 }
 export const AnimalDetails: React.FC<AnimalDetailsProps> = ({ animal }) => {
     return (
-        <div>Animal: {animal?.givenName} {`(${animal?.species}, ${animal?.breed})`}</div>
+        <div className="appointment-member-detail animal-detail">Animal: {animal?.givenName} {`(${animal?.species}, ${animal?.breed})`}</div>
     )
 }
