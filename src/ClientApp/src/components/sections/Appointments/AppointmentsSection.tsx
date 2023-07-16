@@ -1,6 +1,6 @@
 import * as React from "react"
 import { Appointment, AppointmentStatus, Species } from "../../../types/appointments/ui"
-import { AppointmentResponse } from "../../../types/appointments/api";
+import { AppointmentResponse, ConfirmAppointmentRequest, RescheduleAppointmentRequest } from "../../../types/appointments/api";
 import { getDateOrDefault } from "../../../helpers/date";
 import { API_ROUTES } from "../../../constants/api-routes";
 import { AppointmentDetails } from "./AppointmentDetails";
@@ -24,7 +24,7 @@ export const AppointmentsSection: React.FC = () => {
     }, [])
 
     const confirmAppointment = async (appointmentId: number) => {
-        const confirmRequest = { appointmentId };
+        const confirmRequest: ConfirmAppointmentRequest = { appointmentId };
         const fetchResponse = await fetch(API_ROUTES.APPOINTMENT_CONFIRM, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -37,7 +37,7 @@ export const AppointmentsSection: React.FC = () => {
     }
 
     const rescheduleAppointment = async (appointmentId: number, requestedDate: Date) => {
-        const rescheduleRequest = { appointmentId, requestedDateTimeOffset: requestedDate.toISOString() };
+        const rescheduleRequest: RescheduleAppointmentRequest = { appointmentId, requestedDateTimeOffset: requestedDate.toISOString() };
         const fetchResponse = await fetch(API_ROUTES.APPOINTMENT_RESCHEDULE, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
