@@ -5,6 +5,7 @@ import { getDateOrDefault } from "../../../helpers/date";
 import { API_ROUTES } from "../../../constants/api-routes";
 import { AppointmentDetails } from "./AppointmentDetails";
 import "./AppointmentsSection.css"
+import { FixedSpinner } from "../../FixedSpinner";
 
 export const AppointmentsSection: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState(true);
@@ -18,7 +19,7 @@ export const AppointmentsSection: React.FC = () => {
             const clientAppointments: Appointment[] = toUIAppointments(appointmentsResponse);
 
             setAppointments(clientAppointments);
-            setIsLoading(false);
+            // setIsLoading(false);
         }
         initializeAppointments();
     }, [])
@@ -63,7 +64,7 @@ export const AppointmentsSection: React.FC = () => {
         <div id="appointments-section" className="container">
             <h1>Appointments</h1>
             <ul id="appointments-list" className="appointments-list">
-                {isLoading && (<span className="spinner-border" />)}
+                {isLoading && (<FixedSpinner />)}
                 {appointments.map(appointment => (
                     <li key={appointment.appointmentId} id={`appointment-${appointment.appointmentId}`}>
                         <AppointmentDetails
