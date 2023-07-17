@@ -1,5 +1,7 @@
 import * as React from "react"
 import { Modal } from "react-bootstrap"
+import ReactDatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 import { Appointment } from "../../../types/appointments/ui"
 
 type RescheduleModalProps = {
@@ -15,6 +17,9 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment })
             <Modal.Body>
                 <p>Patient requested appointment date: <strong>{appointment.requestedDateTimeOffset?.toLocaleString()}</strong></p>
                 <p>Select a new appointment date:</p>
+                <ReactDatePicker
+                    onChange={() => { }}
+                />
             </Modal.Body>
             <Modal.Footer>
                 <button className="btn btn-secondary">Cancel</button>
