@@ -12,11 +12,23 @@ type RescheduleModalProps = {
 export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, onCloseModal, rescheduleAppointment }) => {
     const [rescheduleDate, setRescheduleDate] = React.useState(appointment.requestedDate);
 
+    /**
+     * Checks whether the given `date` is today or a future date,
+     * irrespective of time-of-day.
+     * @param date The `Date` to check for select-ability
+     * @returns true if `date` should be selectable, false otherwise
+     */
     const isDateTodayOrFuture = (date: Date): boolean => {
-        const currentDate = new Date();
-        const selectedDate = new Date(date);
+        // want to compare against the *start* of today
+        // (i.e. midnight)
+        const currentDateStart = new Date();
+        currentDateStart.setHours(0, 0, 0, 0);
 
-        return currentDate.getTime() <= selectedDate.getTime();
+        // similar comparison against midnight of selected date
+        const selectedDateStart = new Date(date);
+        selectedDateStart.setHours(0, 0, 0, 0);
+
+        return currentDateStart.getTime() <= selectedDateStart.getTime();
     }
 
     const isTimeFuture = (time: Date): boolean => {
