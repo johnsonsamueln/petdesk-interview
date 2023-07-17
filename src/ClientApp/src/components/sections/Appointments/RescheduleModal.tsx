@@ -8,10 +8,10 @@ type RescheduleModalProps = {
     appointment: Appointment;
     onCloseModal: () => void;
 }
-export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment }) => {
-    const [rescheduleDate, setRescheduleDate] = React.useState(appointment.requestedDate)
+export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, onCloseModal }) => {
+    const [rescheduleDate, setRescheduleDate] = React.useState(appointment.requestedDate);
     return (
-        <Modal show={true}>
+        <Modal show={true} onHide={onCloseModal}>
             <Modal.Header>
                 <Modal.Title>Reschedule Appointment</Modal.Title>
             </Modal.Header>
@@ -27,7 +27,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment })
                 />
             </Modal.Body>
             <Modal.Footer>
-                <button className="btn btn-secondary">Cancel</button>
+                <button className="btn btn-secondary" onClick={onCloseModal}>Cancel</button>
                 <button className="btn btn-primary">Request reschedule</button>
             </Modal.Footer>
         </Modal>
