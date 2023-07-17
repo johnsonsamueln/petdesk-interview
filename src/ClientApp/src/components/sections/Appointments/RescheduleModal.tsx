@@ -12,6 +12,19 @@ type RescheduleModalProps = {
 export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, onCloseModal, rescheduleAppointment }) => {
     const [rescheduleDate, setRescheduleDate] = React.useState(appointment.requestedDate);
 
+    const isDateTodayOrFuture = (date: Date): boolean => {
+        const currentDate = new Date();
+        const selectedDate = new Date(date);
+
+        return currentDate.getTime() <= selectedDate.getTime();
+    }
+
+    const isTimeFuture = (time: Date): boolean => {
+        const currentTime = new Date().getTime();
+        const selectedTime = new Date(time).getTime();
+        return currentTime < selectedTime;
+    }
+
     const submitReschedule = async () => {
         if (!rescheduleDate) {
             return;
@@ -33,6 +46,8 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, o
                     showTimeInput
                     showTimeSelect
                     dateFormat="Pp"
+                    filterDate={isDateTodayOrFuture}
+                    filterTime={isTimeFuture}
                 />
             </Modal.Body>
             <Modal.Footer>
