@@ -58,7 +58,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, o
             </Modal.Header>
             <Modal.Body>
                 <p>Patient requested appointment date: <strong>{appointment.requestedDate?.toLocaleString()}</strong></p>
-                <p>Select a new appointment date:</p>
+                <p>Select a new appointment date: {"(times are local)"}</p>
                 <ReactDatePicker
                     selected={rescheduleDate}
                     onChange={onChangeDate}
