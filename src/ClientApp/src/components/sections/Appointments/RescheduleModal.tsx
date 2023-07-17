@@ -11,6 +11,7 @@ type RescheduleModalProps = {
 }
 export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, onCloseModal, rescheduleAppointment }) => {
     const [rescheduleDate, setRescheduleDate] = React.useState(appointment.requestedDate);
+    const [hasError, setHasError] = React.useState(!rescheduleDate)
 
     /**
      * Checks whether the given `date` is today or a future date,
@@ -37,6 +38,12 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, o
         return currentTime < selectedTime;
     }
 
+    const onChangeDate = (date: Date | null) => {
+        setRescheduleDate(date);
+        const isValidDate = !!date && date.getTime() > new Date().getTime();
+        setHasError(!isValidDate);
+    }
+
     const submitReschedule = async () => {
         if (!rescheduleDate) {
             return;
@@ -54,17 +61,18 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, o
                 <p>Select a new appointment date:</p>
                 <ReactDatePicker
                     selected={rescheduleDate}
-                    onChange={setRescheduleDate}
+                    onChange={onChangeDate}
                     showTimeInput
                     showTimeSelect
                     dateFormat="Pp"
                     filterDate={isDateTodayOrFuture}
                     filterTime={isTimeFuture}
                 />
+                {hasError && (<p className="text-danger">Please specify a future date.</p>)}
             </Modal.Body>
             <Modal.Footer>
                 <button className="btn btn-secondary" onClick={onCloseModal}>Cancel</button>
-                <button className="btn btn-primary" onClick={submitReschedule}>Request reschedule</button>
+                <button className="btn btn-primary" onClick={submitReschedule} disabled={hasError}>Request reschedule</button>
             </Modal.Footer>
         </Modal>
     )
