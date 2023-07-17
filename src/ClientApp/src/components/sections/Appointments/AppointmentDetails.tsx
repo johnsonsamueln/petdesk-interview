@@ -7,6 +7,7 @@ import { ReactComponent as BirdIcon } from "../../../content/bird.svg";
 import { ReactComponent as PawIcon } from "../../../content/paw.svg";
 import { ReactComponent as ClockIcon } from "../../../content/clock.svg";
 import "./AppointmentDetail.css"
+import { RescheduleModal } from "./RescheduleModal";
 
 type AppointmentDetailsProps = {
     appointment: Appointment
@@ -79,15 +80,16 @@ export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment })
     return (
         <div className="appointment-member-detail schedule-detail">
             <ClockIcon />
-            <span>{appointment.requestedDateTimeOffset?.toLocaleString()}</span>
+            <span>{appointment.requestedDate?.toLocaleString()}</span>
         </div>
     )
 }
 
 export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointment, confirmAppointment, rescheduleAppointment }) => {
-    const openRescheduleModal = () => {
-        rescheduleAppointment(appointment.appointmentId, new Date("2023-08-01"))
-     }
+    const [isModalOpen, setIsModalOpen] = React.useState(false);
+
+    const openRescheduleModal = () => setIsModalOpen(true);
+    const closeRescheduleModal = () => setIsModalOpen(false);
 
     switch (appointment.appointmentStatus) {
         case AppointmentStatus.ConfirmedByVet:
@@ -97,6 +99,12 @@ export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointm
         case AppointmentStatus.NewPatientRequest:
             return (
                 <>
+                    {isModalOpen && (
+                        <RescheduleModal
+                            appointment={appointment}
+                            onCloseModal={closeRescheduleModal}
+                            rescheduleAppointment={rescheduleAppointment}
+                        />)}
                     <button
                         className="appointment-action-button confirm-action"
                         title="Confirm appointment for the requested time"
@@ -107,7 +115,7 @@ export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointm
                     <button
                         className="appointment-action-button reschedule-action"
                         title="Request a different time for this appointment"
-                        onClick={() => openRescheduleModal()}
+                        onClick={openRescheduleModal}
                     >
                         Reschedule
                     </button>
