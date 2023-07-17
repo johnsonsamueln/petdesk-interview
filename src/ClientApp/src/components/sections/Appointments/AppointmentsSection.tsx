@@ -88,7 +88,7 @@ const toUIAppointments = (appointmentsResponse: AppointmentResponse): Appointmen
         ...serverAppointment,
         appointmentStatus: AppointmentStatus.NewPatientRequest,
         createDateTime: getDateOrDefault(serverAppointment.createDateTime),
-        requestedDateTimeOffset: getDateOrDefault(serverAppointment.requestedDateTimeOffset),
+        requestedDate: getDateOrDefault(serverAppointment.requestedDateTimeOffset),
         animal: serverAppointment.animal && {
             ...serverAppointment.animal,
             species: serverAppointment.animal.species as Species

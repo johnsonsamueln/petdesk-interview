@@ -80,7 +80,7 @@ export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment })
     return (
         <div className="appointment-member-detail schedule-detail">
             <ClockIcon />
-            <span>{appointment.requestedDateTimeOffset?.toLocaleString()}</span>
+            <span>{appointment.requestedDate?.toLocaleString()}</span>
         </div>
     )
 }
