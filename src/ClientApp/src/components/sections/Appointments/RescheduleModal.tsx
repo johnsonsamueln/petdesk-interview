@@ -1,6 +1,11 @@
 import * as React from "react"
+import { Appointment } from "../../../types/appointments/ui"
 
-export const RescheduleModal : React.FC = () => {
+type RescheduleModalProps = {
+    appointment: Appointment;
+    onCloseModal: () => void;
+}
+export const RescheduleModal : React.FC<RescheduleModalProps> = () => {
     return (
         <div className="modal">
             <div className="modal-dialog">
