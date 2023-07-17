@@ -7,9 +7,18 @@ import { Appointment } from "../../../types/appointments/ui"
 type RescheduleModalProps = {
     appointment: Appointment;
     onCloseModal: () => void;
+    rescheduleAppointment: (appointmentId: number, rescheduleDate: Date) => Promise<void>
 }
-export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, onCloseModal }) => {
+export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, onCloseModal, rescheduleAppointment }) => {
     const [rescheduleDate, setRescheduleDate] = React.useState(appointment.requestedDate);
+
+    const submitReschedule = async () => {
+        if (!rescheduleDate) {
+            return;
+        }
+        rescheduleAppointment(appointment.appointmentId, rescheduleDate);
+    }
+
     return (
         <Modal show={true} onHide={onCloseModal}>
             <Modal.Header>
@@ -28,7 +37,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, o
             </Modal.Body>
             <Modal.Footer>
                 <button className="btn btn-secondary" onClick={onCloseModal}>Cancel</button>
-                <button className="btn btn-primary">Request reschedule</button>
+                <button className="btn btn-primary" onClick={submitReschedule}>Request reschedule</button>
             </Modal.Footer>
         </Modal>
     )

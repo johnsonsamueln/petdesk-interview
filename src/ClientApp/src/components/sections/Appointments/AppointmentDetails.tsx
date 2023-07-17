@@ -99,7 +99,12 @@ export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointm
         case AppointmentStatus.NewPatientRequest:
             return (
                 <>
-                    {isModalOpen && (<RescheduleModal appointment={appointment} onCloseModal={closeRescheduleModal} />)}
+                    {isModalOpen && (
+                        <RescheduleModal
+                            appointment={appointment}
+                            onCloseModal={closeRescheduleModal}
+                            rescheduleAppointment={rescheduleAppointment}
+                        />)}
                     <button
                         className="appointment-action-button confirm-action"
                         title="Confirm appointment for the requested time"
