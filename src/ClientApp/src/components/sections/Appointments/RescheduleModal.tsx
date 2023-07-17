@@ -6,13 +6,16 @@ type RescheduleModalProps = {
     appointment: Appointment;
     onCloseModal: () => void;
 }
-export const RescheduleModal: React.FC<RescheduleModalProps> = () => {
+export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment }) => {
     return (
         <Modal show={true}>
             <Modal.Header>
                 <Modal.Title>Reschedule Appointment</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Select a new appointment date:</Modal.Body>
+            <Modal.Body>
+                <p>Patient requested appointment date: <strong>{appointment.requestedDateTimeOffset?.toLocaleString()}</strong></p>
+                <p>Select a new appointment date:</p>
+            </Modal.Body>
             <Modal.Footer>
                 <button className="btn btn-secondary">Cancel</button>
                 <button className="btn btn-primary">Request reschedule</button>
