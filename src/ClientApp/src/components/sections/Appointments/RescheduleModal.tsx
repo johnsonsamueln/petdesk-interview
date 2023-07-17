@@ -23,6 +23,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment })
                     onChange={setRescheduleDate}
                     showTimeInput
                     showTimeSelect
+                    dateFormat="Pp"
                 />
             </Modal.Body>
             <Modal.Footer>
