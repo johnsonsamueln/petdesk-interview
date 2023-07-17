@@ -9,7 +9,9 @@ type RescheduleModalProps = {
 export const RescheduleModal: React.FC<RescheduleModalProps> = () => {
     return (
         <Modal show={true}>
-            <Modal.Header>Reschedule Appointment</Modal.Header>
+            <Modal.Header>
+                <Modal.Title>Reschedule Appointment</Modal.Title>
+            </Modal.Header>
             <Modal.Body>Select a new appointment date:</Modal.Body>
             <Modal.Footer>
                 <button className="btn btn-secondary">Cancel</button>
