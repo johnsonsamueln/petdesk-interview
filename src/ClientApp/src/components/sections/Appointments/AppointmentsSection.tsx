@@ -108,10 +108,15 @@ export const AppointmentsSection: React.FC = () => {
         }))
     }
 
+    const setSortField = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+        const field = event.target.value as AppointmentSortSettings["field"];
+        setSortSettings(prevSort => ({ ...prevSort, field }))
+    };
+
     return (
         <div id="appointments-section" className="container">
             <h1>Appointments</h1>
-            <select value={sortSettings.field} onChange={(event) => setSortSettings(prevSort => ({ ...prevSort, field: event.target.value as any }))}>
+            <select value={sortSettings.field} onChange={setSortField}>
                 {sortFields.map(({ field, label }) => (
                     <option key={field} value={field}>{label}</option>
                 ))}
