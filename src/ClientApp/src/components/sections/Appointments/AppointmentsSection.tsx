@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Animal, Appointment, AppointmentStatus, Species, User } from "../../../types/appointments/ui"
+import { Appointment, AppointmentStatus, Species } from "../../../types/appointments/ui"
 import { AppointmentResponse, ConfirmAppointmentRequest, RescheduleAppointmentRequest } from "../../../types/appointments/api";
 import { getDateOrDefault } from "../../../helpers/date";
 import { API_ROUTES } from "../../../constants/api-routes";
@@ -42,6 +42,7 @@ const getSortedAppointments = (apppointments: Appointment[], sort: AppointmentSo
 export const AppointmentsSection: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [appointments, setAppointments] = React.useState<Appointment[]>([]);
+    const [sortedAppointments, setSortedAppointments] = React.useState<Appointment[]>([])
     const [sort, setSort] = React.useState<AppointmentSort>({ field: "requestedDate", direction: "asc" })
 
     React.useEffect(() => {
@@ -50,17 +51,17 @@ export const AppointmentsSection: React.FC = () => {
             const appointmentsResponse: AppointmentResponse = await fetchResponse.json();
 
             const clientAppointments: Appointment[] = toUIAppointments(appointmentsResponse);
-            const sortedAppointments = getSortedAppointments(clientAppointments, sort);
 
-            setAppointments(sortedAppointments);
+            setAppointments(clientAppointments);
             setIsLoading(false);
         }
         initializeAppointments();
     }, [])
 
     React.useEffect(() => {
-        setAppointments(prevAppointments => getSortedAppointments(prevAppointments, sort));
-    }, [sort])
+        const nextSortedAppointments = getSortedAppointments(appointments, sort);
+        setSortedAppointments(nextSortedAppointments);
+    }, [appointments, sort])
 
     const confirmAppointment = async (appointmentId: number) => {
         setIsLoading(true);
@@ -112,7 +113,7 @@ export const AppointmentsSection: React.FC = () => {
             </select>
             <ul id="appointments-list" className="appointments-list">
                 {isLoading && (<FixedSpinner />)}
-                {appointments.map(appointment => (
+                {sortedAppointments.map(appointment => (
                     <li key={appointment.appointmentId} id={`appointment-${appointment.appointmentId}`}>
                         <AppointmentDetails
                             appointment={appointment}
