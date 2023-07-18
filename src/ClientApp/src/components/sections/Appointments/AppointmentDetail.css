@@ -1,5 +1,5 @@
 .appointment-detail {
-    border: 0.125em solid rebeccapurple;
+    border: 0.125em solid grey;
     border-radius: 2em;
 
     background-color: white;
@@ -41,6 +41,11 @@
 }
 
 .animal-detail {
+    --member-color: rebeccapurple;
+    --member-bg-color: rgb(255, 200, 255);
+}
+
+.schedule-detail-confirmed {
     --member-color: forestgreen;
     --member-bg-color: rgb(214, 253, 214);
 }

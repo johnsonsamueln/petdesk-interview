@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Appointment } from "../../../types/appointments/ui";
+import { Appointment, AppointmentStatus } from "../../../types/appointments/ui";
 import "./AppointmentSort.css"
 
 type AppointmentSortField = {
@@ -9,7 +9,7 @@ type AppointmentSortField = {
 export const sortFields: AppointmentSortField[] = [
     { field: "appointmentStatus", label: "Appointment Status" },
     { field: "appointmentType", label: "Appointment Type" },
-    { field: "requestedDate", label: "Patient Requested Date" },
+    { field: "requestedDate", label: "Appointment Date" },
 ]
 
 export enum SortDirection {
@@ -26,19 +26,12 @@ export const getSortedAppointments = (apppointments: Appointment[], sortSettings
         const { field, direction } = sortSettings;
 
         let compareValue: number
-        if (field === "appointmentStatus" || field === "appointmentType") {
-            const lhsField = lhs[field] || "";
-            const rhsField = rhs[field] || "";
-
-            compareValue = lhsField.localeCompare(rhsField);
+        if (field === "appointmentType") {
+            compareValue = compareAppoinmentType(lhs, rhs);
+        } else if (field === "appointmentStatus") {
+            compareValue = compareAppointmentStatus(lhs, rhs);
         } else if (field === "requestedDate") {
-            const lhsField = lhs[field];
-            const lhsUnixTime = lhsField?.getTime() || 0;
-
-            const rhsField = rhs[field];
-            const rhsUnixTime = rhsField?.getTime() || 0;
-
-            compareValue = lhsUnixTime - rhsUnixTime;
+            compareValue = compareAppoinmentDate(lhs, rhs);
         } else {
             compareValue = 0;
         }
@@ -74,4 +67,36 @@ export const AppointmentSort: React.FC<AppointmentSortProps> = ({ sortSettings, 
             </select>
         </div>
     )
+}
+
+const compareAppoinmentType = (lhs: Appointment, rhs: Appointment) => {
+    const lhsType = lhs.appointmentType || "";
+    const rhsType = rhs.appointmentType || "";
+
+    return lhsType.localeCompare(rhsType);
+}
+
+const compareAppoinmentDate = (lhs: Appointment, rhs: Appointment) => {
+    const lhsDate = lhs.requestedDate;
+    const lhsUnixTime = lhsDate?.getTime() || 0;
+
+    const rhsDate = rhs.requestedDate;
+    const rhsUnixTime = rhsDate?.getTime() || 0;
+
+    return lhsUnixTime - rhsUnixTime;
+}
+
+const STATUS_SORT_ORDER = [
+    AppointmentStatus.NewPatientRequest,
+    AppointmentStatus.RescheduleRequestedByVet,
+    AppointmentStatus.ConfirmedByVet
+]
+const compareAppointmentStatus = (lhs: Appointment, rhs: Appointment) => {
+    const lhsStatus = lhs.appointmentStatus;
+    const lhsIndex = STATUS_SORT_ORDER.indexOf(lhsStatus);
+
+    const rhsStatus = rhs.appointmentStatus;
+    const rhsIndex = STATUS_SORT_ORDER.indexOf(rhsStatus);
+
+    return lhsIndex - rhsIndex;
 }

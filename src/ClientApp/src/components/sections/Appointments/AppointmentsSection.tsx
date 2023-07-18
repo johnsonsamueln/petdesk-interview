@@ -38,7 +38,7 @@ export const AppointmentsSection: React.FC = () => {
         });
 
         if (fetchResponse.ok) {
-            setAppointmentStatus(appointmentId, AppointmentStatus.ConfirmedByVet);
+            updateAppointment(appointmentId, { appointmentStatus: AppointmentStatus.ConfirmedByVet });
         }
         setIsLoading(false);
     }
@@ -53,15 +53,15 @@ export const AppointmentsSection: React.FC = () => {
         });
 
         if (fetchResponse.ok) {
-            setAppointmentStatus(appointmentId, AppointmentStatus.RescheduleRequestedByVet);
+            updateAppointment(appointmentId, { appointmentStatus: AppointmentStatus.RescheduleRequestedByVet, requestedDate });
         }
         setIsLoading(false);
     }
 
-    const setAppointmentStatus = async (appointmentId: number, appointmentStatus: AppointmentStatus) => {
+    const updateAppointment = async (appointmentId: number, updates: Partial<Appointment>) => {
         setAppointments(prevAppointments => prevAppointments.map(appointment => {
             if (appointment.appointmentId === appointmentId) {
-                return { ...appointment, appointmentStatus }
+                return { ...appointment, ...updates }
             } else {
                 return appointment;
             }

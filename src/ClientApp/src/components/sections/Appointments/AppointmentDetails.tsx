@@ -79,16 +79,32 @@ type ScheduleDetailsProps = {
     appointment: Appointment
 }
 export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment }) => {
+    const isConfirmed = appointment.appointmentStatus === AppointmentStatus.ConfirmedByVet
+    let statusLabel: string | null;
+    switch (appointment.appointmentStatus) {
+        case AppointmentStatus.ConfirmedByVet:
+            statusLabel = "Confirmed"
+            break;
+        case AppointmentStatus.RescheduleRequestedByVet:
+            statusLabel = "Reschedule Requested"
+            break;
+        case AppointmentStatus.NewPatientRequest:
+            statusLabel = "Patient Request"
+            break;
+        default:
+            statusLabel = null;
+    }
     const isFutureDate = isDateTimeFuture(appointment.requestedDate);
     return (
         <div
             className={classNames("appointment-member-detail", {
-                "schedule-detail-future": isFutureDate,
-                "schedule-detail-past": !isFutureDate,
+                "schedule-detail-confirmed": isConfirmed,
+                "schedule-detail-future": !isConfirmed && isFutureDate,
+                "schedule-detail-past": !isConfirmed && !isFutureDate,
             })}
         >
             <ClockIcon />
-            <span>{appointment.requestedDate?.toLocaleString()}</span>
+            <span>{statusLabel && `${statusLabel}:`} {appointment.requestedDate?.toLocaleString()}</span>
         </div>
     )
 }
