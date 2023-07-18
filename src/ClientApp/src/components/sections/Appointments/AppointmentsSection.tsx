@@ -43,8 +43,8 @@ export const AppointmentsSection: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [appointments, setAppointments] = React.useState<Appointment[]>([]);
     const [sort, setSort] = React.useState<AppointmentSort>({ field: "requestedDate", direction: "asc" })
-    
-    const sortedAppointments = getSortedAppointments(appointments, sort);
+
+    const sortedAppointments = React.useMemo(() => getSortedAppointments(appointments, sort), [appointments, sort]);
 
     React.useEffect(() => {
         async function initializeAppointments() {
@@ -102,7 +102,7 @@ export const AppointmentsSection: React.FC = () => {
     return (
         <div id="appointments-section" className="container">
             <h1>Appointments</h1>
-            <select value={sort.field} onChange={(event) => setSort(prevSort => ({...prevSort, field: event.target.value as any }))}>
+            <select value={sort.field} onChange={(event) => setSort(prevSort => ({ ...prevSort, field: event.target.value as any }))}>
                 {sortFields.map(field => (
                     <option key={field} value={field}>{field}</option>
                 ))}
