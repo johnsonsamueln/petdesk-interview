@@ -79,12 +79,14 @@ type ScheduleDetailsProps = {
     appointment: Appointment
 }
 export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment }) => {
+    const isConfirmed = appointment.appointmentStatus === AppointmentStatus.ConfirmedByVet
     const isFutureDate = isDateTimeFuture(appointment.requestedDate);
     return (
         <div
             className={classNames("appointment-member-detail", {
-                "schedule-detail-future": isFutureDate,
-                "schedule-detail-past": !isFutureDate,
+                "schedule-detail-confirmed": isConfirmed,
+                "schedule-detail-future": !isConfirmed && isFutureDate,
+                "schedule-detail-past": !isConfirmed && !isFutureDate,
             })}
         >
             <ClockIcon />

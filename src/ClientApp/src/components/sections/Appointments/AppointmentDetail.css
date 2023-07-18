@@ -45,6 +45,11 @@
     --member-bg-color: rgb(255, 200, 255);
 }
 
+.schedule-detail-confirmed {
+    --member-color: forestgreen;
+    --member-bg-color: rgb(214, 253, 214);
+}
+
 .schedule-detail-future {
     --member-color: darkgoldenrod;
     --member-bg-color: lightyellow;
