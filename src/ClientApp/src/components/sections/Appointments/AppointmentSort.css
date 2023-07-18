@@ -1,0 +1,14 @@
+.appointment-sort {
+	margin: 1em auto;
+}
+
+.appointment-sort > :not(:last-child) {
+    margin-right: 1em;
+}
+
+.appointment-sort-select {
+	border: 0.25em solid lightblue;
+	border-radius: 0.5em;
+	background: white;
+	padding: 0.5em;
+}

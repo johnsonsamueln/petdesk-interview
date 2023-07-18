@@ -6,10 +6,14 @@ import { API_ROUTES } from "../../../constants/api-routes";
 import { AppointmentDetails } from "./AppointmentDetails";
 import "./AppointmentsSection.css"
 import { FixedSpinner } from "../../FixedSpinner";
+import { AppointmentSort, AppointmentSortSettings, SortDirection, getSortedAppointments } from "./AppointmentSort";
 
 export const AppointmentsSection: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [appointments, setAppointments] = React.useState<Appointment[]>([]);
+    const [sortSettings, setSortSettings] = React.useState<AppointmentSortSettings>({ field: "requestedDate", direction: SortDirection.Ascending })
+
+    const sortedAppointments = React.useMemo(() => getSortedAppointments(appointments, sortSettings), [appointments, sortSettings]);
 
     React.useEffect(() => {
         async function initializeAppointments() {
@@ -64,12 +68,20 @@ export const AppointmentsSection: React.FC = () => {
         }))
     }
 
+    const setSortField = (field: AppointmentSortSettings["field"]) => setSortSettings(prevSort => ({ ...prevSort, field }));
+    const setSortDirection = (direction: AppointmentSortSettings["direction"]) => setSortSettings(prevSort => ({ ...prevSort, direction }));
+
     return (
         <div id="appointments-section" className="container">
             <h1>Appointments</h1>
+            <AppointmentSort
+                sortSettings={sortSettings}
+                onChangeSortField={setSortField}
+                onChangeSortDirection={setSortDirection}
+            />
             <ul id="appointments-list" className="appointments-list">
                 {isLoading && (<FixedSpinner />)}
-                {appointments.map(appointment => (
+                {sortedAppointments.map(appointment => (
                     <li key={appointment.appointmentId} id={`appointment-${appointment.appointmentId}`}>
                         <AppointmentDetails
                             appointment={appointment}
