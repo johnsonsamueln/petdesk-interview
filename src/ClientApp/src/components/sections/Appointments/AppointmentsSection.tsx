@@ -132,8 +132,8 @@ export const AppointmentsSection: React.FC = () => {
                     ))}
                 </select>
                 <select className="appointment-sort-select" value={sortSettings.direction} onChange={setSortDirection}>
-                    <option value={SortDirection.Ascending}>Ascending</option>
-                    <option value={SortDirection.Descending}>Descending</option>
+                    <option value={SortDirection.Ascending}>↑ Ascending</option>
+                    <option value={SortDirection.Descending}>↓ Descending</option>
                 </select>
             </div>
             <ul id="appointments-list" className="appointments-list">
