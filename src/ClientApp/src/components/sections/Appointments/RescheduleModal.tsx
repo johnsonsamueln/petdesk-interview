@@ -42,7 +42,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, o
 
     const onChangeDate = (date: Date | null) => {
         setRescheduleDate(date);
-        const isValidDate = !!date && date.getTime() > new Date().getTime();
+        const isValidDate = !!date && isDateTimeFuture(date);
         setHasError(!isValidDate);
     }
 
