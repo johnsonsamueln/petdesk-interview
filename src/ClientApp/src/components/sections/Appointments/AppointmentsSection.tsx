@@ -17,9 +17,13 @@ const sortFields: AppointmentSortField[] = [
     { field: "requestedDate", label: "Patient Requested Date" },
 ]
 
+enum SortDirection {
+    Ascending = "asc",
+    Descending = "desc"
+}
 type AppointmentSortSettings = {
     field: keyof Appointment;
-    direction: "asc" | "desc"
+    direction: SortDirection
 }
 const getSortedAppointments = (apppointments: Appointment[], sortSettings: AppointmentSortSettings): Appointment[] => {
     const sortedAppointments = [...apppointments];
@@ -43,7 +47,7 @@ const getSortedAppointments = (apppointments: Appointment[], sortSettings: Appoi
         } else {
             compareValue = 0;
         }
-        return direction === "asc" ? compareValue : -compareValue;
+        return direction === SortDirection.Ascending ? compareValue : -compareValue;
     });
     return sortedAppointments;
 };
@@ -51,7 +55,7 @@ const getSortedAppointments = (apppointments: Appointment[], sortSettings: Appoi
 export const AppointmentsSection: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [appointments, setAppointments] = React.useState<Appointment[]>([]);
-    const [sortSettings, setSortSettings] = React.useState<AppointmentSortSettings>({ field: "requestedDate", direction: "asc" })
+    const [sortSettings, setSortSettings] = React.useState<AppointmentSortSettings>({ field: "requestedDate", direction: SortDirection.Ascending })
 
     const sortedAppointments = React.useMemo(() => getSortedAppointments(appointments, sortSettings), [appointments, sortSettings]);
 
@@ -108,19 +112,30 @@ export const AppointmentsSection: React.FC = () => {
         }))
     }
 
-    const setSortField = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    const setSortField = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const field = event.target.value as AppointmentSortSettings["field"];
         setSortSettings(prevSort => ({ ...prevSort, field }))
     };
 
+    const setSortDirection = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const direction = event.target.value as AppointmentSortSettings["direction"];
+        setSortSettings(prevSort => ({ ...prevSort, direction }))
+    }
+
     return (
         <div id="appointments-section" className="container">
             <h1>Appointments</h1>
-            <select value={sortSettings.field} onChange={setSortField}>
-                {sortFields.map(({ field, label }) => (
-                    <option key={field} value={field}>{label}</option>
-                ))}
-            </select>
+            <div>
+                <select value={sortSettings.field} onChange={setSortField}>
+                    {sortFields.map(({ field, label }) => (
+                        <option key={field} value={field}>{label}</option>
+                    ))}
+                </select>
+                <select value={sortSettings.direction} onChange={setSortDirection}>
+                    <option value={SortDirection.Ascending}>Ascending</option>
+                    <option value={SortDirection.Descending}>Descending</option>
+                </select>
+            </div>
             <ul id="appointments-list" className="appointments-list">
                 {isLoading && (<FixedSpinner />)}
                 {sortedAppointments.map(appointment => (
