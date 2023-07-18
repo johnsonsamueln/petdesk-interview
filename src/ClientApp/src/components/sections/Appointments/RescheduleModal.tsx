@@ -11,15 +11,15 @@ type RescheduleModalProps = {
     rescheduleAppointment: (appointmentId: number, rescheduleDate: Date) => Promise<void>
 }
 export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, onCloseModal, rescheduleAppointment }) => {
-    const isRequestedDateValid = !!appointment.requestedDate && isDateTimeFuture(appointment.requestedDate)
+    const isRequestedDateValid = isDateTimeFuture(appointment.requestedDate) 
     const initialDate = isRequestedDateValid ? appointment.requestedDate : null
     const [rescheduleDate, setRescheduleDate] = React.useState(initialDate);
     const [hasError, setHasError] = React.useState(!isRequestedDateValid)
 
     const onChangeDate = (date: Date | null) => {
         setRescheduleDate(date);
-        const isValidDate = !!date && isDateTimeFuture(date);
-        setHasError(!isValidDate);
+        const isRescheduleValidDate = isDateTimeFuture(date);
+        setHasError(!isRescheduleValidDate);
     }
 
     const submitReschedule = async () => {
