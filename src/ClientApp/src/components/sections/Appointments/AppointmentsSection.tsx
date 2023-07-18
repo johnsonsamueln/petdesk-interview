@@ -7,15 +7,24 @@ import { AppointmentDetails } from "./AppointmentDetails";
 import "./AppointmentsSection.css"
 import { FixedSpinner } from "../../FixedSpinner";
 
-const sortFields: Array<keyof Appointment> = ["appointmentStatus", "appointmentType", "requestedDate"]
-type AppointmentSort = {
+type AppointmentSortField = {
+    field: keyof Appointment,
+    label: string,
+}
+const sortFields: AppointmentSortField[] = [
+    { field: "appointmentStatus", label: "Appointment Status" },
+    { field: "appointmentType", label: "Appointment Type" },
+    { field: "requestedDate", label: "Patient Requested Date" },
+]
+
+type AppointmentSortSettings = {
     field: keyof Appointment;
     direction: "asc" | "desc"
 }
-const getSortedAppointments = (apppointments: Appointment[], sort: AppointmentSort): Appointment[] => {
+const getSortedAppointments = (apppointments: Appointment[], sortSettings: AppointmentSortSettings): Appointment[] => {
     const sortedAppointments = [...apppointments];
     sortedAppointments.sort((lhs, rhs) => {
-        const { field, direction } = sort;
+        const { field, direction } = sortSettings;
 
         let compareValue: number
         if (field === "appointmentStatus" || field === "appointmentType") {
@@ -42,9 +51,9 @@ const getSortedAppointments = (apppointments: Appointment[], sort: AppointmentSo
 export const AppointmentsSection: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [appointments, setAppointments] = React.useState<Appointment[]>([]);
-    const [sort, setSort] = React.useState<AppointmentSort>({ field: "requestedDate", direction: "asc" })
+    const [sortSettings, setSortSettings] = React.useState<AppointmentSortSettings>({ field: "requestedDate", direction: "asc" })
 
-    const sortedAppointments = React.useMemo(() => getSortedAppointments(appointments, sort), [appointments, sort]);
+    const sortedAppointments = React.useMemo(() => getSortedAppointments(appointments, sortSettings), [appointments, sortSettings]);
 
     React.useEffect(() => {
         async function initializeAppointments() {
@@ -102,9 +111,9 @@ export const AppointmentsSection: React.FC = () => {
     return (
         <div id="appointments-section" className="container">
             <h1>Appointments</h1>
-            <select value={sort.field} onChange={(event) => setSort(prevSort => ({ ...prevSort, field: event.target.value as any }))}>
-                {sortFields.map(field => (
-                    <option key={field} value={field}>{field}</option>
+            <select value={sortSettings.field} onChange={(event) => setSortSettings(prevSort => ({ ...prevSort, field: event.target.value as any }))}>
+                {sortFields.map(({ field, label }) => (
+                    <option key={field} value={field}>{label}</option>
                 ))}
             </select>
             <ul id="appointments-list" className="appointments-list">
