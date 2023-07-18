@@ -3,6 +3,7 @@ import { Modal } from "react-bootstrap"
 import ReactDatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { Appointment } from "../../../types/appointments/ui"
+import { isDateTimeFuture, isDateTodayOrFuture } from "../../../helpers/date"
 
 type RescheduleModalProps = {
     appointment: Appointment;
@@ -10,38 +11,15 @@ type RescheduleModalProps = {
     rescheduleAppointment: (appointmentId: number, rescheduleDate: Date) => Promise<void>
 }
 export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, onCloseModal, rescheduleAppointment }) => {
-    const [rescheduleDate, setRescheduleDate] = React.useState(appointment.requestedDate);
-    const [hasError, setHasError] = React.useState(!rescheduleDate)
-
-    /**
-     * Checks whether the given `date` is today or a future date,
-     * irrespective of time-of-day.
-     * @param date The `Date` to check for select-ability
-     * @returns true if `date` should be selectable, false otherwise
-     */
-    const isDateTodayOrFuture = (date: Date): boolean => {
-        // want to compare against the *start* of today
-        // (i.e. midnight)
-        const currentDateStart = new Date();
-        currentDateStart.setHours(0, 0, 0, 0);
-
-        // similar comparison against midnight of selected date
-        const selectedDateStart = new Date(date);
-        selectedDateStart.setHours(0, 0, 0, 0);
-
-        return currentDateStart.getTime() <= selectedDateStart.getTime();
-    }
-
-    const isTimeFuture = (time: Date): boolean => {
-        const currentTime = new Date().getTime();
-        const selectedTime = new Date(time).getTime();
-        return currentTime < selectedTime;
-    }
+    const isRequestedDateValid = isDateTimeFuture(appointment.requestedDate) 
+    const initialDate = isRequestedDateValid ? appointment.requestedDate : null
+    const [rescheduleDate, setRescheduleDate] = React.useState(initialDate);
+    const [hasError, setHasError] = React.useState(!isRequestedDateValid)
 
     const onChangeDate = (date: Date | null) => {
         setRescheduleDate(date);
-        const isValidDate = !!date && date.getTime() > new Date().getTime();
-        setHasError(!isValidDate);
+        const isRescheduleValidDate = isDateTimeFuture(date);
+        setHasError(!isRescheduleValidDate);
     }
 
     const submitReschedule = async () => {
@@ -66,7 +44,7 @@ export const RescheduleModal: React.FC<RescheduleModalProps> = ({ appointment, o
                     showTimeSelect
                     dateFormat="Pp"
                     filterDate={isDateTodayOrFuture}
-                    filterTime={isTimeFuture}
+                    filterTime={isDateTimeFuture}
                 />
                 {hasError && (<p className="text-danger">Please specify a future date.</p>)}
             </Modal.Body>
