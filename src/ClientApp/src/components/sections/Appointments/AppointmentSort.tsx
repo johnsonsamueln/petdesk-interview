@@ -9,7 +9,7 @@ type AppointmentSortField = {
 export const sortFields: AppointmentSortField[] = [
     { field: "appointmentStatus", label: "Appointment Status" },
     { field: "appointmentType", label: "Appointment Type" },
-    { field: "requestedDate", label: "Patient Requested Date" },
+    { field: "requestedDate", label: "Appointment Date" },
 ]
 
 export enum SortDirection {
