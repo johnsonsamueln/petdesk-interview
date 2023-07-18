@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Appointment } from "../../../types/appointments/ui";
+import "./AppointmentSort.css"
 
 type AppointmentSortField = {
     field: keyof Appointment,
