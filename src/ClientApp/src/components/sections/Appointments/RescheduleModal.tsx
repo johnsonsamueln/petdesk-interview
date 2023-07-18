@@ -3,31 +3,7 @@ import { Modal } from "react-bootstrap"
 import ReactDatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
 import { Appointment } from "../../../types/appointments/ui"
-
-/**
- * Checks whether the given `date` is today or a future date,
- * irrespective of time-of-day.
- * @param date The `Date` to check for select-ability
- * @returns true if `date` should be selectable, false otherwise
- */
-const isDateTodayOrFuture = (date: Date): boolean => {
-    // want to compare against the *start* of today
-    // (i.e. midnight)
-    const currentDateStart = new Date();
-    currentDateStart.setHours(0, 0, 0, 0);
-
-    // similar comparison against midnight of selected date
-    const selectedDateStart = new Date(date);
-    selectedDateStart.setHours(0, 0, 0, 0);
-
-    return currentDateStart.getTime() <= selectedDateStart.getTime();
-}
-
-const isDateTimeFuture = (time: Date): boolean => {
-    const currentTime = new Date().getTime();
-    const selectedTime = new Date(time).getTime();
-    return currentTime < selectedTime;
-}
+import { isDateTimeFuture, isDateTodayOrFuture } from "../../../helpers/date"
 
 type RescheduleModalProps = {
     appointment: Appointment;
