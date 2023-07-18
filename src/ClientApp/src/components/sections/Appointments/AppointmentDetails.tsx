@@ -1,4 +1,5 @@
 import * as React from "react";
+import classNames from "classnames";
 import { Animal, Appointment, AppointmentStatus, Species, User } from "../../../types/appointments/ui";
 import { ReactComponent as UserIcon } from "../../../content/user.svg";
 import { ReactComponent as DogIcon } from "../../../content/dog.svg";
@@ -8,6 +9,7 @@ import { ReactComponent as PawIcon } from "../../../content/paw.svg";
 import { ReactComponent as ClockIcon } from "../../../content/clock.svg";
 import "./AppointmentDetail.css"
 import { RescheduleModal } from "./RescheduleModal";
+import { isDateTimeFuture } from "../../../helpers/date";
 
 type AppointmentDetailsProps = {
     appointment: Appointment
@@ -77,8 +79,14 @@ type ScheduleDetailsProps = {
     appointment: Appointment
 }
 export const ScheduleDetails: React.FC<ScheduleDetailsProps> = ({ appointment }) => {
+    const isFutureDate = isDateTimeFuture(appointment.requestedDate);
     return (
-        <div className="appointment-member-detail schedule-detail">
+        <div
+            className={classNames("appointment-member-detail", {
+                "schedule-detail-future": isFutureDate,
+                "schedule-detail-past": !isFutureDate,
+            })}
+        >
             <ClockIcon />
             <span>{appointment.requestedDate?.toLocaleString()}</span>
         </div>

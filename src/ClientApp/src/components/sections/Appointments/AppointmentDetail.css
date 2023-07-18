@@ -45,9 +45,14 @@
     --member-bg-color: rgb(214, 253, 214);
 }
 
-.schedule-detail {
+.schedule-detail-future {
     --member-color: darkgoldenrod;
     --member-bg-color: lightyellow;
+}
+
+.schedule-detail-past {
+    --member-color: darkred;
+    --member-bg-color: lightpink;
 }
 
 .appointment-actions > :not(:last-child) {
