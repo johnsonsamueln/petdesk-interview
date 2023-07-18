@@ -125,13 +125,13 @@ export const AppointmentsSection: React.FC = () => {
     return (
         <div id="appointments-section" className="container">
             <h1>Appointments</h1>
-            <div>
-                <select value={sortSettings.field} onChange={setSortField}>
+            <div className="appointment-sort">
+                <select className="appointment-sort-select" value={sortSettings.field} onChange={setSortField}>
                     {sortFields.map(({ field, label }) => (
                         <option key={field} value={field}>{label}</option>
                     ))}
                 </select>
-                <select value={sortSettings.direction} onChange={setSortDirection}>
+                <select className="appointment-sort-select" value={sortSettings.direction} onChange={setSortDirection}>
                     <option value={SortDirection.Ascending}>Ascending</option>
                     <option value={SortDirection.Descending}>Descending</option>
                 </select>
