@@ -42,8 +42,9 @@ const getSortedAppointments = (apppointments: Appointment[], sort: AppointmentSo
 export const AppointmentsSection: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState(true);
     const [appointments, setAppointments] = React.useState<Appointment[]>([]);
-    const [sortedAppointments, setSortedAppointments] = React.useState<Appointment[]>([])
     const [sort, setSort] = React.useState<AppointmentSort>({ field: "requestedDate", direction: "asc" })
+    
+    const sortedAppointments = getSortedAppointments(appointments, sort);
 
     React.useEffect(() => {
         async function initializeAppointments() {
@@ -57,11 +58,6 @@ export const AppointmentsSection: React.FC = () => {
         }
         initializeAppointments();
     }, [])
-
-    React.useEffect(() => {
-        const nextSortedAppointments = getSortedAppointments(appointments, sort);
-        setSortedAppointments(nextSortedAppointments);
-    }, [appointments, sort])
 
     const confirmAppointment = async (appointmentId: number) => {
         setIsLoading(true);
