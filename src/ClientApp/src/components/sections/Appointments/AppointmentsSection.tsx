@@ -6,51 +6,7 @@ import { API_ROUTES } from "../../../constants/api-routes";
 import { AppointmentDetails } from "./AppointmentDetails";
 import "./AppointmentsSection.css"
 import { FixedSpinner } from "../../FixedSpinner";
-
-type AppointmentSortField = {
-    field: keyof Appointment,
-    label: string,
-}
-const sortFields: AppointmentSortField[] = [
-    { field: "appointmentStatus", label: "Appointment Status" },
-    { field: "appointmentType", label: "Appointment Type" },
-    { field: "requestedDate", label: "Patient Requested Date" },
-]
-
-enum SortDirection {
-    Ascending = "asc",
-    Descending = "desc"
-}
-type AppointmentSortSettings = {
-    field: keyof Appointment;
-    direction: SortDirection
-}
-const getSortedAppointments = (apppointments: Appointment[], sortSettings: AppointmentSortSettings): Appointment[] => {
-    const sortedAppointments = [...apppointments];
-    sortedAppointments.sort((lhs, rhs) => {
-        const { field, direction } = sortSettings;
-
-        let compareValue: number
-        if (field === "appointmentStatus" || field === "appointmentType") {
-            const lhsField = lhs[field] || "";
-            const rhsField = rhs[field] || "";
-
-            compareValue = lhsField.localeCompare(rhsField);
-        } else if (field === "requestedDate") {
-            const lhsField = lhs[field];
-            const lhsUnixTime = lhsField?.getTime() || 0;
-
-            const rhsField = rhs[field];
-            const rhsUnixTime = rhsField?.getTime() || 0;
-
-            compareValue = lhsUnixTime - rhsUnixTime;
-        } else {
-            compareValue = 0;
-        }
-        return direction === SortDirection.Ascending ? compareValue : -compareValue;
-    });
-    return sortedAppointments;
-};
+import { AppointmentSort, AppointmentSortSettings, SortDirection, getSortedAppointments } from "./AppointmentSort";
 
 export const AppointmentsSection: React.FC = () => {
     const [isLoading, setIsLoading] = React.useState(true);
@@ -112,30 +68,17 @@ export const AppointmentsSection: React.FC = () => {
         }))
     }
 
-    const setSortField = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const field = event.target.value as AppointmentSortSettings["field"];
-        setSortSettings(prevSort => ({ ...prevSort, field }))
-    };
-
-    const setSortDirection = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        const direction = event.target.value as AppointmentSortSettings["direction"];
-        setSortSettings(prevSort => ({ ...prevSort, direction }))
-    }
+    const setSortField = (field: AppointmentSortSettings["field"]) => setSortSettings(prevSort => ({ ...prevSort, field }));
+    const setSortDirection = (direction: AppointmentSortSettings["direction"]) => setSortSettings(prevSort => ({ ...prevSort, direction }));
 
     return (
         <div id="appointments-section" className="container">
             <h1>Appointments</h1>
-            <div className="appointment-sort">
-                <select className="appointment-sort-select" value={sortSettings.field} onChange={setSortField}>
-                    {sortFields.map(({ field, label }) => (
-                        <option key={field} value={field}>{label}</option>
-                    ))}
-                </select>
-                <select className="appointment-sort-select" value={sortSettings.direction} onChange={setSortDirection}>
-                    <option value={SortDirection.Ascending}>↑ Ascending</option>
-                    <option value={SortDirection.Descending}>↓ Descending</option>
-                </select>
-            </div>
+            <AppointmentSort
+                sortSettings={sortSettings}
+                onChangeSortField={setSortField}
+                onChangeSortDirection={setSortDirection}
+            />
             <ul id="appointments-list" className="appointments-list">
                 {isLoading && (<FixedSpinner />)}
                 {sortedAppointments.map(appointment => (
