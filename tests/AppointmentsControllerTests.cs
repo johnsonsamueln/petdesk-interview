@@ -91,6 +91,23 @@ public class AppointmentsControllerTests
     }
 
     [TestMethod]
+    public async Task ConfirmAppointment_AppointmentIdValid_ReturnsResponse_WithOk()
+    {
+        // Arrange
+        var request = new ControllerModels.ConfirmAppointmentRequest()
+        {
+            AppointmentId = 123
+        };
+
+        // Act
+        var actionResult = await sut.ConfirmAppointment(request);
+
+        // Assert
+        Assert.IsNotNull(actionResult);
+        Assert.IsInstanceOfType(actionResult, typeof(OkResult));
+    }
+
+    [TestMethod]
     [DataRow(0)]
     [DataRow(-1)]
     public async Task RescheduleAppointment_AppointmentIdInvalid_ReturnsResponse_WithBadRequest(int appointmentId)
@@ -138,5 +155,23 @@ public class AppointmentsControllerTests
         // Assert
         Assert.IsNotNull(actionResult);
         Assert.IsInstanceOfType(actionResult, typeof(BadRequestObjectResult));
+    }
+
+    [TestMethod]
+    public async Task RescheduleAppointment_RequestValid_ReturnsResponse_WithOk()
+    {
+        // Arrange
+        var request = new ControllerModels.RescheduleAppointmentRequest()
+        {
+            AppointmentId = 123,
+            RequestedDateTimeOffset = DateTimeOffset.Now.AddDays(7),
+        };
+
+        // Act
+        var actionResult = await sut.RescheduleAppointment(request);
+
+        // Assert
+        Assert.IsNotNull(actionResult);
+        Assert.IsInstanceOfType(actionResult, typeof(OkResult));
     }
 }
