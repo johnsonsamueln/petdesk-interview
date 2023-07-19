@@ -72,10 +72,15 @@ public class AppointmentsControllerTests
     }
 
     [TestMethod]
-    public async Task ConfirmAppointment_AppointmentIdZero_ReturnsResponse_WithBadRequest()
+    [DataRow(0)]
+    [DataRow(-1)]
+    public async Task ConfirmAppointment_AppointmentIdInvalid_ReturnsResponse_WithBadRequest(int appointmentId)
     {
         // Arrange
-        var request = new ControllerModels.ConfirmAppointmentRequest();
+        var request = new ControllerModels.ConfirmAppointmentRequest()
+        {
+            AppointmentId = appointmentId
+        };
 
         // Act
         var actionResult = await sut.ConfirmAppointment(request);
