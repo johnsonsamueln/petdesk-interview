@@ -3,6 +3,8 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using petdesk_interview_app.Controllers.Appointments;
 using petdesk_interview_app.External.Pstmn;
+using ControllerModels = petdesk_interview_app.Controllers.Appointments.Models;
+using ExternalModels = petdesk_interview_app.External.Pstmn.Models;
 
 namespace petdesk_interview_app_tests;
 
@@ -34,5 +36,20 @@ public class AppointmentsControllerTests
 
         // Assert
         mockPstmn.Verify(pstm => pstm.GetAppointments(), Times.Once);
+    }
+
+    [TestMethod]
+    public async Task GetAppointments_PstmnReturnsAppointments_CallsMapper_WithPstmnAppointments()
+    {
+        // Arrange
+        var pstmnAppointments = new ExternalModels.Appointment[] { new ExternalModels.Appointment() };
+        mockPstmn.Setup(pstm => pstm.GetAppointments())
+            .ReturnsAsync(pstmnAppointments);
+
+        // Act
+        await sut.GetAppointments();
+
+        // Assert
+        mockMapper.Verify(mapper => mapper.Map<ExternalModels.Appointment[], ControllerModels.Appointment[]>(pstmnAppointments));
     }
 }
