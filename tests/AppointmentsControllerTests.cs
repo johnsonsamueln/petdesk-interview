@@ -108,4 +108,34 @@ public class AppointmentsControllerTests
         Assert.IsNotNull(actionResult);
         Assert.IsInstanceOfType(actionResult, typeof(BadRequestObjectResult));
     }
+
+    [TestMethod]
+    [DataRow(null)]
+    [DataRow("1985-10-21T00:00:00")]
+    public async Task RescheduleAppointment_RequestedDateTimeOffsetInvalid_ReturnsResponse_WithBadRequest(string? requestedDateTimeOffsetStr)
+    {
+        // Arrange
+        DateTimeOffset? requestedDateTimeOffset;
+        if (requestedDateTimeOffsetStr == null)
+        {
+            requestedDateTimeOffset = null;
+        }
+        else
+        {
+            requestedDateTimeOffset = DateTimeOffset.Parse(requestedDateTimeOffsetStr);
+        }
+
+        var request = new ControllerModels.RescheduleAppointmentRequest()
+        {
+            AppointmentId = 123,
+            RequestedDateTimeOffset = requestedDateTimeOffset
+        };
+
+        // Act
+        var actionResult = await sut.RescheduleAppointment(request);
+
+        // Assert
+        Assert.IsNotNull(actionResult);
+        Assert.IsInstanceOfType(actionResult, typeof(BadRequestObjectResult));
+    }
 }
