@@ -12,8 +12,10 @@ export const Dashboard: React.FC = () => {
         }
         window.addEventListener("scroll", scrollListener);
 
-        return () => window.removeEventListener("scroll",scrollListener);
+        return () => window.removeEventListener("scroll", scrollListener);
     }, [])
+
+    const scrollToTop = () => window.scrollTo(0, 0);
 
     return (
         <div id="dashboard">
@@ -23,7 +25,7 @@ export const Dashboard: React.FC = () => {
                 </div>
                 <div className="dashboard-header-right">
                     {shouldShowScrollButton && (
-                        <button className="dashboard-header-top-button">Scroll to top</button>
+                        <button className="dashboard-header-top-button" onClick={scrollToTop}>Scroll to top</button>
                     )}
                 </div>
             </header>
