@@ -5,7 +5,9 @@ import { AppointmentsSection } from "./sections/Appointments/AppointmentsSection
 export const Dashboard: React.FC = () => {
     return (
         <div id="dashboard">
-            <h1 className="title">Dashboard</h1>
+            <header className="dashboard-header">
+                <h1>Dashboard</h1>
+            </header>
             <AppointmentsSection />
         </div>
     )
