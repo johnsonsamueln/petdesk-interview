@@ -22,3 +22,16 @@
     display: flex;
     justify-content: flex-end;
 }
+
+.dashboard-header-top-button {
+    background: none;
+    border: none;
+
+    font-size: 1.25em;
+
+    color: white;
+}
+
+.dashboard-header-top-button:hover {
+    color: wheat;
+}
