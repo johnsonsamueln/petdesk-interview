@@ -3,6 +3,18 @@ import "./Dashboard.css"
 import { AppointmentsSection } from "./sections/Appointments/AppointmentsSection"
 
 export const Dashboard: React.FC = () => {
+    const [shouldShowScrollButton, setShouldShowScrollButton] = React.useState(false);
+
+    React.useEffect(() => {
+        const scrollListener = () => {
+            const isScrolled = window.scrollY > 300
+            setShouldShowScrollButton(isScrolled);
+        }
+        window.addEventListener("scroll", scrollListener);
+
+        return () => window.removeEventListener("scroll",scrollListener);
+    }, [])
+
     return (
         <div id="dashboard">
             <header className="dashboard-header">
@@ -10,7 +22,9 @@ export const Dashboard: React.FC = () => {
                     <h1 className="dashboard-header-title">Dashboard</h1>
                 </div>
                 <div className="dashboard-header-right">
-                    <button className="dashboard-header-top-button">Scroll to top</button>
+                    {shouldShowScrollButton && (
+                        <button className="dashboard-header-top-button">Scroll to top</button>
+                    )}
                 </div>
             </header>
             <AppointmentsSection />
