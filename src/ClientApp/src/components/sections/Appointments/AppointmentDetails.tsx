@@ -121,6 +121,7 @@ export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointm
         case AppointmentStatus.RescheduleRequestedByVet:
             return (<span>Reschedule request sent. Awaiting response from patient.</span>)
         case AppointmentStatus.NewPatientRequest:
+            const isFutureDate = isDateTimeFuture(appointment.requestedDate)
             return (
                 <>
                     {isModalOpen && (
@@ -129,13 +130,15 @@ export const AppointmentActions: React.FC<AppointmentDetailsProps> = ({ appointm
                             onCloseModal={closeRescheduleModal}
                             rescheduleAppointment={rescheduleAppointment}
                         />)}
-                    <button
-                        className="appointment-action-button confirm-action"
-                        title="Confirm appointment for the requested time"
-                        onClick={() => confirmAppointment(appointment.appointmentId)}
-                    >
-                        Confirm
-                    </button>
+                    {isFutureDate && (
+                        <button
+                            className="appointment-action-button confirm-action"
+                            title="Confirm appointment for the requested time"
+                            onClick={() => confirmAppointment(appointment.appointmentId)}
+                        >
+                            Confirm
+                        </button>
+                    )}
                     <button
                         className="appointment-action-button reschedule-action"
                         title="Request a different time for this appointment"
