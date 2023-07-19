@@ -7,7 +7,7 @@ using AutoMapper;
 namespace petdesk_interview_app.Controllers.Appointments;
 
 [ApiController]
-[Route("appointments")]
+[Route("api/appointments")]
 public class AppointmentsController : ControllerBase
 {
     private readonly ILogger<AppointmentsController> logger;
