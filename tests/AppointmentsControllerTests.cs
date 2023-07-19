@@ -109,22 +109,23 @@ public class AppointmentsControllerTests
         Assert.IsInstanceOfType(actionResult, typeof(BadRequestObjectResult));
     }
 
+    private static IEnumerable<object?[]> RequestedDateTimeOffsetData
+    {
+        get
+        {
+            return new List<object?[]>()
+            {
+                new object?[] { null },
+                new object?[] { DateTimeOffset.Now.AddDays(-1) },
+            };
+        }
+    }
+
     [TestMethod]
-    [DataRow(null)]
-    [DataRow("1985-10-21T00:00:00")]
-    public async Task RescheduleAppointment_RequestedDateTimeOffsetInvalid_ReturnsResponse_WithBadRequest(string? requestedDateTimeOffsetStr)
+    [DynamicData(nameof(RequestedDateTimeOffsetData))]
+    public async Task RescheduleAppointment_RequestedDateTimeOffsetInvalid_ReturnsResponse_WithBadRequest(DateTimeOffset? requestedDateTimeOffset)
     {
         // Arrange
-        DateTimeOffset? requestedDateTimeOffset;
-        if (requestedDateTimeOffsetStr == null)
-        {
-            requestedDateTimeOffset = null;
-        }
-        else
-        {
-            requestedDateTimeOffset = DateTimeOffset.Parse(requestedDateTimeOffsetStr);
-        }
-
         var request = new ControllerModels.RescheduleAppointmentRequest()
         {
             AppointmentId = 123,
