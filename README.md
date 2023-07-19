@@ -57,3 +57,38 @@ By default, the published .NET app executable runs on `https://localhost:5001` a
 
 See more details in the .NET docs
  - [Published SPAs in ASP.NET](https://learn.microsoft.com/en-us/aspnet/core/client-side/spa/intro?view=aspnetcore-6.0#published-single-page-apps)
+
+## Unit Tests
+Unit tests are written with MSTest.
+
+### Run unit tests
+```sh
+[petdesk-interview]$> cd tests
+[petdesk-interview/tests]$> dotnet test
+```
+
+### Code Coverage Report
+There are many ways to get code coverage reports from unit tests. Described here is how to do so with the dotnet CLI reportgenerator tool (from [.NET docs](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-code-coverage?tabs=windows#integrate-with-net-test))
+
+#### 1. Install reportgenerator tool in dotnet CLI
+```sh
+dotnet tool install -g dotnet-reportgenerator-globaltool
+```
+
+#### 2. Run unit tests with coverage collection
+```sh
+[petdesk-interview/tests]$> dotnet test --collect:"XPlat Code Coverage"
+```
+
+#### 3. Use reportgenerator to generate code coverage report
+```sh
+[petdesk-interview/tests]$> reportgenerator \
+-reports:"TestResults/**/*.cobertura.xml" \
+-targetdir:"coveragereport" \
+-reporttypes:Html
+```
+
+#### 4. View coverage report
+The coverage report files are placed under `tests/coveragereport/`. The `tests/coveragereport/index.html` can be opened in your browser, and will take you through viewing the coverage.
+
+See more details at [ReportGenerator](https://reportgenerator.io/)
