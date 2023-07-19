@@ -23,7 +23,7 @@ public class AppointmentsController : ControllerBase
 
     [HttpGet]
     [Route("")]
-    public async Task<ControllerModels.AppointmentResponse> Get()
+    public async Task<ControllerModels.AppointmentResponse> GetAppointments()
     {
         var pstmnAppointments = await pstmn.GetAppointments();
 

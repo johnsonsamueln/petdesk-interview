@@ -25,7 +25,14 @@ public class AppointmentsControllerTests
     }
 
     [TestMethod]
-    public void TestMethod1()
+    public async Task GetAppointments_CallsPstmnGetAppointments()
     {
+        // Arrange
+
+        // Act
+        await sut.GetAppointments();
+
+        // Assert
+        mockPstmn.Verify(pstm => pstm.GetAppointments(), Times.Once);
     }
 }
