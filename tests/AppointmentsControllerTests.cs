@@ -50,6 +50,23 @@ public class AppointmentsControllerTests
         await sut.GetAppointments();
 
         // Assert
-        mockMapper.Verify(mapper => mapper.Map<ExternalModels.Appointment[], ControllerModels.Appointment[]>(pstmnAppointments));
+        mockMapper.Verify(mapper => mapper.Map<ExternalModels.Appointment[], ControllerModels.Appointment[]>(pstmnAppointments), Times.Once);
+    }
+
+    [TestMethod]
+    public async Task GetAppointments_MapperReturnsAppointments_ReturnsResponse_WithMappedAppointments()
+    {
+        // Arrange
+        var expectedAppointments = new ControllerModels.Appointment[] { new ControllerModels.Appointment() };
+        mockMapper.Setup(mapper => mapper.Map<ExternalModels.Appointment[], ControllerModels.Appointment[]>(It.IsAny<ExternalModels.Appointment[]>()))
+            .Returns(expectedAppointments);
+
+        // Act
+        var response = await sut.GetAppointments();
+
+        // Assert
+        Assert.IsNotNull(response);
+        var actualAppointments = response.Appointments;
+        CollectionAssert.AreEquivalent(expectedAppointments, actualAppointments?.ToArray());
     }
 }
