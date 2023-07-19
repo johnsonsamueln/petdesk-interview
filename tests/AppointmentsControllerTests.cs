@@ -89,4 +89,23 @@ public class AppointmentsControllerTests
         Assert.IsNotNull(actionResult);
         Assert.IsInstanceOfType(actionResult, typeof(BadRequestObjectResult));
     }
+
+    [TestMethod]
+    [DataRow(0)]
+    [DataRow(-1)]
+    public async Task RescheduleAppointment_AppointmentIdInvalid_ReturnsResponse_WithBadRequest(int appointmentId)
+    {
+        // Arrange
+        var request = new ControllerModels.RescheduleAppointmentRequest()
+        {
+            AppointmentId = appointmentId
+        };
+
+        // Act
+        var actionResult = await sut.RescheduleAppointment(request);
+
+        // Assert
+        Assert.IsNotNull(actionResult);
+        Assert.IsInstanceOfType(actionResult, typeof(BadRequestObjectResult));
+    }
 }

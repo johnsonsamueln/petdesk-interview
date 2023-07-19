@@ -53,7 +53,7 @@ public class AppointmentsController : ControllerBase
 
     [HttpPost]
     [Route("reschedule")]
-    public async Task<IActionResult> Reschedule([FromBody] ControllerModels.RescheduleAppointmentRequest request)
+    public async Task<IActionResult> RescheduleAppointment([FromBody] ControllerModels.RescheduleAppointmentRequest request)
     {
         if (request.AppointmentId <= 0)
         {
