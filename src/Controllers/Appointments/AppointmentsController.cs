@@ -37,7 +37,7 @@ public class AppointmentsController : ControllerBase
 
     [HttpPost]
     [Route("confirm")]
-    public async Task<IActionResult> Confirm([FromBody] ControllerModels.ConfirmAppointmentRequest request)
+    public async Task<IActionResult> ConfirmAppointment([FromBody] ControllerModels.ConfirmAppointmentRequest request)
     {
         if (request.AppointmentId <= 0)
         {

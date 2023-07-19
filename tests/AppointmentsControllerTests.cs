@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using petdesk_interview_app.Controllers.Appointments;
@@ -68,5 +69,19 @@ public class AppointmentsControllerTests
         Assert.IsNotNull(response);
         var actualAppointments = response.Appointments;
         CollectionAssert.AreEquivalent(expectedAppointments, actualAppointments?.ToArray());
+    }
+
+    [TestMethod]
+    public async Task ConfirmAppointment_AppointmentIdZero_ReturnsResponse_WithBadRequest()
+    {
+        // Arrange
+        var request = new ControllerModels.ConfirmAppointmentRequest();
+
+        // Act
+        var actionResult = await sut.ConfirmAppointment(request);
+
+        // Assert
+        Assert.IsNotNull(actionResult);
+        Assert.IsInstanceOfType(actionResult, typeof(BadRequestObjectResult));
     }
 }
