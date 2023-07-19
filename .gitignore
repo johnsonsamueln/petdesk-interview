@@ -32,6 +32,9 @@ Obj/
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
+# Cobertura Coverage Reports
+coveragereport/
+
 # NUNIT
 *.VisualState.xml
 TestResult.xml

@@ -23,7 +23,7 @@ public class AppointmentsController : ControllerBase
 
     [HttpGet]
     [Route("")]
-    public async Task<ControllerModels.AppointmentResponse> Get()
+    public async Task<ControllerModels.AppointmentResponse> GetAppointments()
     {
         var pstmnAppointments = await pstmn.GetAppointments();
 
@@ -37,7 +37,7 @@ public class AppointmentsController : ControllerBase
 
     [HttpPost]
     [Route("confirm")]
-    public async Task<IActionResult> Confirm([FromBody] ControllerModels.ConfirmAppointmentRequest request)
+    public async Task<IActionResult> ConfirmAppointment([FromBody] ControllerModels.ConfirmAppointmentRequest request)
     {
         if (request.AppointmentId <= 0)
         {
@@ -53,7 +53,7 @@ public class AppointmentsController : ControllerBase
 
     [HttpPost]
     [Route("reschedule")]
-    public async Task<IActionResult> Reschedule([FromBody] ControllerModels.RescheduleAppointmentRequest request)
+    public async Task<IActionResult> RescheduleAppointment([FromBody] ControllerModels.RescheduleAppointmentRequest request)
     {
         if (request.AppointmentId <= 0)
         {
